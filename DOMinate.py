@@ -7,12 +7,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 
-# import DOMinate_options
-
-
-
-
-
 
 
 
@@ -34,9 +28,6 @@ emailTO="digsec.oregon@gmail.com"
 
 # subject line of email
 alertSubject="SCRAPER: criteria match list"
-
-
-
 
 
 
@@ -157,32 +148,19 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
 
 ###############################
-def evaluate( units, emailTo ):
-    """
-    - This takes in list of unit dict
-
-    - matches according to what we want
-
-    - then asks an email module to email a message to the given list
-
-    """
-    print("eval...")
-
-    # pick out ones with adequate price per hash
+def evaluate( units ):
+    
+    goodUnits = []
     for u in units:
+
         # guardian, only look for USA hosted miners
         if u['Hosted in:'] != "USA":
             continue
 
         prime = u['Price:'] / u['Hashrate:']
 
-        # TODO - make 100 a variable and put it in settings
         if u['Price:'] / u['Hashrate:'] >= 100:
-            emailThese.append( u )
-    
-
-    for i in emailThese:
-        print(i['Name'], i['Price:'] / i['Hashrate:'], i['Hashrate:'] / i['Energy Cons:']) #TODO - round numbers only please
+            goodUnits.append( u )
 
         # unit = {"Certified Reseller:":False,
         # "Hosted in:":"at home",
@@ -194,6 +172,7 @@ def evaluate( units, emailTo ):
         # "Minimum Order:":0,
         # "Online date:":0,
         # "Shipping date:":0}
+    return goodUnits
 
 
 
@@ -205,13 +184,14 @@ def evaluate( units, emailTo ):
 
 
 
-########################################
-def notify_ifmatch( units, emailThese ):
-    return 0
-
-    # TRY AND EXCEPT GO HERE!!!
 
 
+##############################
+def emailMatches( goodUnits ):
+    print("schwee")
+
+    for i in emailThese:
+        print(i['Name'], i['Price:'] / i['Hashrate:'], i['Hashrate:'] / i['Energy Cons:']) #TODO - round numbers only please
 
 
 
@@ -226,29 +206,17 @@ def notify_ifmatch( units, emailThese ):
 
 ##########################
 if __name__ == "__main__":
-    #TODO log that it's running
-    print(f"{__file__} running.")
-    
-    # CHANGE IF YOU HAVE INTERNET OR NOT
+
     #units = DOMinate(filen='out.txt', sleeptime=1)
     units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
-
-    #emailThese = []
-
-    #notify_ifmatch( units, emailThese )
     
-    #evaluate( units )
+    goodUnits = evaluate( units )
+
+    #emailMatches( goodUnits )
+    for u in goodUnits:
+        print(u)
 
 
-    print(f"{__file__} done.")
 
-##########################
-# NOTES ##################
-##########################
-#
-#
-#
-#
-#
-#
-#
+
+    #emailMatches( evaluate( DOMinate( URL = "https://compassmining.io/hardware" ) ) )
