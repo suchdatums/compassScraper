@@ -1,29 +1,29 @@
-# DOMinate
-Take control of knowledge
-
 # setup the pi to scrape on...
-START WITH FRESH INSTALL
 
-enable SSH from rpi-imager
+- START WITH FRESH INSTALL
+    - use Ctrl-Shift-Z trick...
+- Enable SSH and VNC
+- Setup Wifi
 
-SSH and enable VNC with "sudo raspi-config"
 
 ```
-# enable SSH
 sudo raspi-config
 
 sudo apt update -y
 sudo apt upgrade -y
 
 sudo apt-get install chromium-chromedriver
-
 ```
-
-# get the easy repo!
 
 # get the repo!
 ```
-ummm...
+repo="DOMinate"
+url="https://github.com/suchdatums/$repo"
+git clone --depth=1 $url
+rm -rf ./$repo/.git
+rm ./$repo/.gitignore
+mv -f ./$repo/* ~/
+rm -r ./$repo/
 ```
 
 # setup the software to scrape... 
