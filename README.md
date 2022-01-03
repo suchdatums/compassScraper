@@ -59,3 +59,6 @@ crontab -e
 
 * * * * * /home/pi/run_DOMinate.sh
 ```
+
+# ensure variables in DOMinate.py are correct
+most notably, chromedriverpath
