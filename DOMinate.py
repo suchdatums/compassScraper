@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-import os, time, csv, re
+import os, time, csv, re, math
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 
+import easy_notify
 
 
 
@@ -24,10 +25,13 @@ csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
 stripUnits = True     # Allowed: True / False
 
 # who will DOMinate.py email?
-emailTO="digsec.oregon@gmail.com"
+toList=[
+        "gatherallthedata@gmail.com",
+        "digsec.oregon@gmail.com"
+        ]
 
 # subject line of email
-alertSubject="SCRAPER: criteria match list"
+alertSubject="Compass Hardware Scrape Criteria Match!"
 
 
 
@@ -153,49 +157,38 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 ###############################
 def evaluate( units ):
     
-    goodUnits = []
+    msg = "found units with UNDER $100 per terahash:\n"
+    msg += "Eff = Price / Hashrate\n\n"
+    msg += "Eff\tName\t\t\t\tPrice:\n"
+
+
+# unit = {"Certified Reseller:":False,
+# "Hosted in:":"at home",
+# "Second Hand:":'new', # should be undetermined... but it works for now
+# "Name":0,
+# "Price:":0,
+# "Hashrate:":0,
+# "Energy Cons:":0,
+# "Minimum Order:":0,
+# "Online date:":0,
+# "Shipping date:":0}
     for u in units:
 
-        # guardian, only look for USA hosted miners
+        # guardian
         if u['Hosted in:'] != "USA":
             continue
 
-        costEff = u['Price:'] / u['Hashrate:']
-        if costEff >= 160:
-            print(u['Name'], "\teff:", costEff)
-            goodUnits.append( u )
+        if "Z15" in u['Name']: # BAD WAY TO DO THIS!... FIND A WAY TO INCLUDE ONLY BITCOIN MINERS
+            continue
 
-        # unit = {"Certified Reseller:":False,
-        # "Hosted in:":"at home",
-        # "Second Hand:":'new', # should be undetermined... but it works for now
-        # "Name":0,
-        # "Price:":0,
-        # "Hashrate:":0,
-        # "Energy Cons:":0,
-        # "Minimum Order:":0,
-        # "Online date:":0,
-        # "Shipping date:":0}
-    return goodUnits
+        costEff = math.floor(u['Price:'] / u['Hashrate:'])
+        if costEff > 100:
+            continue
+    
+        print(u['Name'], "\teff:", costEff)
+        msg += str(costEff) + '\t' + str(u['Name'])  + " - $" + str(u['Price:']) + " @ " + str(u['Hashrate:']) + " TH/s \n"
 
-
-
-
-
-
-
-
-
-
-
-
-
-##############################
-def emailMatches( goodUnits ):
-    print("schwee")
-
-    for i in emailThese:
-        print(i['Name'], i['Price:'] / i['Hashrate:'], i['Hashrate:'] / i['Energy Cons:']) #TODO - round numbers only please
-
+    easy_notify.sendalert(msg, alertSubject, toList)
 
 
 
@@ -210,13 +203,7 @@ def emailMatches( goodUnits ):
 ##########################
 if __name__ == "__main__":
 
-    units = DOMinate(filen='out.txt', sleeptime=1)
-    #units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
+    #units = DOMinate(filen='out.txt', sleeptime=1)
+    units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
     
-    goodUnits = evaluate( units )
-
-    #emailMatches( goodUnits )
-
-
-
-    #emailMatches( evaluate( DOMinate( URL = "https://compassmining.io/hardware" ) ) )
+    evaluate( units )
