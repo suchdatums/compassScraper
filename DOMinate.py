@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 
 import easy_notify
-
+import toList
 
 
 #############################################################
@@ -23,12 +23,6 @@ csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
 # this will strip the units (100 TH/s) --> (100), ($19,000) --> (19000) ...technically all non-numeric characters
 # I THINK I NEED THIS... BECAUSE I'M GOING TO BE USING THE NUMBERS IN MATH.. AND IDON'T WANT TO HAVE TO SCRAPE THAT SHIT OFF LATER
 stripUnits = True     # Allowed: True / False
-
-# who will DOMinate.py email?
-toList=[
-        "gatherallthedata@gmail.com",
-        "digsec.oregon@gmail.com"
-        ]
 
 # subject line of email
 alertSubject="Compass Hardware Scrape Criteria Match!"
