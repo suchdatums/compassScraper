@@ -17,10 +17,6 @@ sudo apt upgrade -y
 
 sudo apt-get install chromium-chromedriver
 
-# MAC ONLY:
-# python3 -m pip install --upgrade pip
-
-pip install bs4 selenium lxml requests
 ```
 
 # get the easy repo!
@@ -32,9 +28,15 @@ ummm...
 
 # setup the software to scrape... 
 ```
+# MAC ONLY:
+# python3 -m pip install --upgrade pip
+
+
 python3 -m venv .venv
 source .venv/bin/activate
 
+
+pip install bs4 selenium lxml requests
 ```
 
 # configure it to run...
