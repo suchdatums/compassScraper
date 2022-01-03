@@ -44,6 +44,7 @@ def DOMinate(URL="", sleeptime=3, filen=None):
     # GET THE SOUP
     if filen != None:
         try:
+            # TODO - if the file is not there, is still runs and gives a stupid error about soup variable...
             outfile = open(filen)
             soup = BeautifulSoup(outfile, 'lxml')
             sleeptime = 0 # no need to wait!
@@ -147,6 +148,8 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
 
 
+
+
 ###############################
 def evaluate( units ):
     
@@ -157,9 +160,9 @@ def evaluate( units ):
         if u['Hosted in:'] != "USA":
             continue
 
-        prime = u['Price:'] / u['Hashrate:']
-
-        if u['Price:'] / u['Hashrate:'] >= 100:
+        costEff = u['Price:'] / u['Hashrate:']
+        if costEff >= 160:
+            print(u['Name'], "\teff:", costEff)
             goodUnits.append( u )
 
         # unit = {"Certified Reseller:":False,
@@ -207,15 +210,12 @@ def emailMatches( goodUnits ):
 ##########################
 if __name__ == "__main__":
 
-    #units = DOMinate(filen='out.txt', sleeptime=1)
-    units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
+    units = DOMinate(filen='out.txt', sleeptime=1)
+    #units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
     
     goodUnits = evaluate( units )
 
     #emailMatches( goodUnits )
-    for u in goodUnits:
-        print(u)
-
 
 
 
