@@ -23,6 +23,8 @@ sudo apt-get install chromium-chromedriver
 pip install bs4 selenium lxml requests
 ```
 
+# get the easy repo!
+
 # get the repo!
 ```
 ummm...
