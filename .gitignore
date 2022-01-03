@@ -4,6 +4,6 @@
 
 *credentials.py
 
-.log
-.csv
-.txt
+*.log
+*.csv
+*.txt

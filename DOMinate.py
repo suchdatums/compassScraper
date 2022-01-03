@@ -48,13 +48,14 @@ alertSubject="SCRAPER: criteria match list"
 
 
 #############################
-def DOMinate(URL, sleeptime=3, filen=None):
+def DOMinate(URL="", sleeptime=3, filen=None):
+
     # GET THE SOUP
     if filen != None:
-
         try:
             outfile = open(filen)
             soup = BeautifulSoup(outfile, 'lxml')
+            sleeptime = 0 # no need to wait!
             print("getting the DOM from file")
         except:
             print(f"could not get DOM info from file: {filen}")
@@ -71,16 +72,18 @@ def DOMinate(URL, sleeptime=3, filen=None):
         soup = BeautifulSoup(html, 'lxml') # or html
         driver.quit()
 
+
+
     # MEAT AND POTATOES OF THE FUNCTION
     allUnits = []
-
-    csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name","Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:","Shipping date:"]
-
-    # NO TOUCH OR PAPA NO KISS!
-    FLAG_USA = """viewBox='0 0 7410"""
-    FLAG_RUS = """viewBox='0 0 9"""
-    FLAG_CAN = """viewBox='0 0 1000"""
     try:
+
+        csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name","Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:","Shipping date:"]
+
+        # NO TOUCH OR PAPA NO KISS!
+        FLAG_USA = """viewBox='0 0 7410"""
+        FLAG_RUS = """viewBox='0 0 9"""
+        FLAG_CAN = """viewBox='0 0 1000"""
         with open(csv_file, 'w') as csvfile:
 
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -143,7 +146,6 @@ def DOMinate(URL, sleeptime=3, filen=None):
         # TODO CATCH EVERYTHING..
         # TODO - IF THERE IS A BREAK IN THE WEB SCRAPING (PERHAPS FROM COMPASS UPDATING THEIR WEBSITE), THEN IT NEEDS TO REFLECT IN A DEBUG LOG
         print("yo dog, your code borked.. ok man?\n")
-
     return allUnits
 
 
@@ -228,7 +230,7 @@ if __name__ == "__main__":
     print(f"{__file__} running.")
     
     # CHANGE IF YOU HAVE INTERNET OR NOT
-    #units = DOMinate(file='out.txt', sleeptime=1)
+    #units = DOMinate(filen='out.txt', sleeptime=1)
     units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
 
     #emailThese = []
@@ -238,6 +240,7 @@ if __name__ == "__main__":
     #evaluate( units )
 
 
+    print(f"{__file__} done.")
 
 ##########################
 # NOTES ##################
