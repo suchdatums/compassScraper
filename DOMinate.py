@@ -149,23 +149,23 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
 
 ###############################
-def evaluate( units ):
+def generate_message_by_eval( units ):
     
     msg = "found units with UNDER $100 per terahash:\n"
     msg += "Eff = Price / Hashrate\n\n"
     msg += "Eff\tName\t\t\t\tPrice:\n"
 
 
-# unit = {"Certified Reseller:":False,
-# "Hosted in:":"at home",
-# "Second Hand:":'new', # should be undetermined... but it works for now
-# "Name":0,
-# "Price:":0,
-# "Hashrate:":0,
-# "Energy Cons:":0,
-# "Minimum Order:":0,
-# "Online date:":0,
-# "Shipping date:":0}
+    # unit = {"Certified Reseller:":False,
+    # "Hosted in:":"at home",
+    # "Second Hand:":'new', # should be undetermined... but it works for now
+    # "Name":0,
+    # "Price:":0,
+    # "Hashrate:":0,
+    # "Energy Cons:":0,
+    # "Minimum Order:":0,
+    # "Online date:":0,
+    # "Shipping date:":0}
     for u in units:
 
         # guardian
@@ -182,9 +182,7 @@ def evaluate( units ):
         print(u['Name'], "\teff:", costEff)
         msg += str(costEff) + '\t' + str(u['Name'])  + " - $" + str(u['Price:']) + " @ " + str(u['Hashrate:']) + " TH/s \n"
 
-    easy_notify.sendalert(msg, alertSubject, toList)
-
-
+    return msg
 
 
 
@@ -200,4 +198,10 @@ if __name__ == "__main__":
     #units = DOMinate(filen='out.txt', sleeptime=1)
     units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
     
-    evaluate( units )
+    msg = generate_message_by_eval( units )
+
+    # COMPARE MSG WITH LAST MSG... (save to file?)
+    # IF DIFFERENT:
+        # EMAIL THAT SHIT!
+    
+    easy_notify.sendalert(msg, alertSubject, toList.toList)
