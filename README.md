@@ -26,11 +26,25 @@ mv -f ./$repo/* ~/
 rm -r ./$repo/
 ```
 
+# make toList.py
+```
+echo "toList=['@gmail.com', '@gmail.com', '@gmail.com']" > ~/toList.py
+nano toList.py
+```
+TODO write a script to do this... like setup_easy_notify.sh
+
+# change permissions
+```
+chmod +x ~/run_DOMinate.sh
+```
+
 # setup the software to scrape... 
 ```
-# MAC ONLY:
-python3 -m pip install --upgrade pip
+(MAC ONLY!!!)   python3 -m pip install --upgrade pip
+```
 
+
+```
 python3 -m venv .venv
 source .venv/bin/activate
 
@@ -39,12 +53,9 @@ pip install bs4 selenium lxml requests
 
 # configure it to run...
 
-crontab -e is used to run karen.sh every 15-or-so minutes
+configure run.sh to run with:
+```
+crontab -e
 
-karen does a lot:
-
-- run DOMinatrix.py to scrape the DOM and place it into scraped.csv
-- run evaluate.py to evaluate the items and email
-
-
-
+* * * * * /home/pi/run_DOMinate.sh
+```
