@@ -67,7 +67,9 @@ def DOMinate(URL="", sleeptime=3, filen=None):
     allUnits = []
     try:
 
-        csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name","Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:","Shipping date:"]
+        csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name",\
+            "Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:",\
+                "Shipping date:","Link:"]
 
         # NO TOUCH OR PAPA NO KISS!
         FLAG_USA = """viewBox='0 0 7410"""
@@ -89,13 +91,19 @@ def DOMinate(URL="", sleeptime=3, filen=None):
                         "Energy Cons:":0,
                         "Minimum Order:":0,
                         "Online date:":0,
-                        "Shipping date:":0}
+                        "Shipping date:":0,
+                        "Link:":0}
 
                 if "Compass Certified Reseller" in g.text:
                     unit["Certified Reseller:"] = True
 
                 if "Hand" in g.text: # && "Second" (logical, not bitwise operand?)
                     unit["Second Hand:"] = 'used'
+
+                # LINK
+                # ['w-full','relative','pb-5/10','overflow-hidden','rounded-15px','cursor-pointer']
+                lnk = g.find(lambda tag: tag.name == 'div' and tag.get('class') == ['w-full','relative','pb-5/10','overflow-hidden','rounded-15px','cursor-pointer'])\.get('href')
+                unit['Link:'] = "https://compassmining.io" + lnk
 
                 # <p class="pt-1 text-sm font-bold leading-none font-sans">Hosted in </p>
                 a = g.find(lambda tag: tag.name == 'p' and tag.get('class') == ['pt-1','text-sm','font-bold','leading-none','font-sans'])
@@ -166,10 +174,11 @@ def generate_message_by_eval( units ):
             continue
     
         print(u['Name'], "\teff:", costEff)
-        msg += '(' + str(costEff) + " $/TH) \t "\
+        msg += '[ ' + str(costEff) + " $/TH ] ---> "\
+            + ' (' + str(u["Second Hand:"]) + ') ' \
             + str(u['Name']) \
-            + '\t(' + str(u["Second Hand:"]) + ") \n$" \
-            + str(u['Price:']) + " | " \
+            + '\n' \
+            + '$' + str(u['Price:']) + " | " \
             + str(u['Hashrate:']) + " TH/s | " \
             + str(u["Energy Cons:"]) + " Watt | " \
             + "Hosted in " + str(u["Hosted in:"]) + " | " \
