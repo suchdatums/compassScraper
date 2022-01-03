@@ -8,8 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 
 import easy_notify
-import toList
-
+import toList # toList=["...@gmail.com", "..."]
 
 #############################################################
 ####### options
@@ -205,3 +204,4 @@ if __name__ == "__main__":
         # EMAIL THAT SHIT!
     
     easy_notify.sendalert(msg, alertSubject, toList.toList)
+    
