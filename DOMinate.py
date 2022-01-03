@@ -23,7 +23,7 @@ from bs4 import BeautifulSoup
 chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
 
 # What do you want to name the CSV file?
-csv_file = "scraped_latest.csv"      # Allowed: anything inside single or double quotes
+csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
 
 # this will strip the units (100 TH/s) --> (100), ($19,000) --> (19000) ...technically all non-numeric characters
 # I THINK I NEED THIS... BECAUSE I'M GOING TO BE USING THE NUMBERS IN MATH.. AND IDON'T WANT TO HAVE TO SCRAPE THAT SHIT OFF LATER
@@ -44,33 +44,42 @@ alertSubject="SCRAPER: criteria match list"
 
 
 
+
+
+
 #############################
-def DOMinate(URL, sleeptime):
+def DOMinate(URL, sleeptime=3, filen=None):
+    # GET THE SOUP
+    if filen != None:
+
+        try:
+            outfile = open(filen)
+            soup = BeautifulSoup(outfile, 'lxml')
+            print("getting the DOM from file")
+        except:
+            print(f"could not get DOM info from file: {filen}")
+
+    else: # get it on the internet...
+        print(f"Dominating {URL}")
+        opts = Options()
+        opts.add_argument(" --headless")
+        driver = webdriver.Chrome( chromedriverpath , options=opts)
+        driver.get(URL)
+        #TODO - log success here
+        time.sleep( sleeptime )
+        html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+        soup = BeautifulSoup(html, 'lxml') # or html
+        driver.quit()
+
+    # MEAT AND POTATOES OF THE FUNCTION
+    allUnits = []
+
+    csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name","Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:","Shipping date:"]
+
     # NO TOUCH OR PAPA NO KISS!
     FLAG_USA = """viewBox='0 0 7410"""
     FLAG_RUS = """viewBox='0 0 9"""
     FLAG_CAN = """viewBox='0 0 1000"""
-
-    csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name","Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:","Shipping date:"]
-
-    opts = Options()
-    opts.add_argument(" --headless")
-    driver = webdriver.Chrome( chromedriverpath , options=opts)
-    #driver = webdriver.Chrome('/usr/bin/chromedriver', options=opts) # pi baby
-    #driver = webdriver.Chrome('/Users/noone/Downloads/chromedriver', options=opts) # mac daddy
-
-    driver.get(URL)
-    #TODO - log success here
-
-    time.sleep( sleeptime )
-
-    html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
-    soup = BeautifulSoup(html, 'lxml') # or html
-    driver.quit()
-
-    allUnits = []
-
-    # MEAT AND POTATOES OF THE FUNCTION
     try:
         with open(csv_file, 'w') as csvfile:
 
