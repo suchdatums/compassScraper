@@ -29,12 +29,6 @@ alertSubject="Compass Hardware Scrape Criteria Match!"
 
 
 
-
-
-
-
-
-
 #############################
 def DOMinate(URL="", sleeptime=3, filen=None):
 
@@ -56,6 +50,7 @@ def DOMinate(URL="", sleeptime=3, filen=None):
         driver = webdriver.Chrome( chromedriverpath , options=opts)
         driver.get(URL)
         #TODO - log success here
+        print(f"napping for {sleeptime} seconds so the DOM can cook...")
         time.sleep( sleeptime )
         html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
         soup = BeautifulSoup(html, 'lxml') # or html
@@ -82,9 +77,9 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
             for g in soup.find_all(lambda tag: tag.name == 'div' and tag.get('class') == ['flex','flex-col','w-full','lg:pr-4','pb-4','pt-6','h-full']):
 
-                unit = {"Certified Reseller:":False,
+                unit = {"Certified Reseller:":"No",
                         "Hosted in:":"at home",
-                        "Second Hand:":'new', # should be undetermined... but it works for now
+                        "Second Hand:":'new', # should be undetermined... but it works for now (do not assume state)
                         "Name":0,
                         "Price:":0,
                         "Hashrate:":0,
@@ -95,7 +90,7 @@ def DOMinate(URL="", sleeptime=3, filen=None):
                         "Link:":0}
 
                 if "Compass Certified Reseller" in g.text:
-                    unit["Certified Reseller:"] = True
+                    unit["Certified Reseller:"] = "Yes"
 
                 if "Hand" in g.text: # && "Second" (logical, not bitwise operand?)
                     unit["Second Hand:"] = 'used'
@@ -147,18 +142,11 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
 
 
-
-
-
-
-
-
-
-
 ###############################
 def generate_message_by_eval( units ):
     
-    msg = "found units with UNDER $100 per terahash:\n\n"
+    msg = ""
+    #msg += "found units with UNDER $100 per terahash:\n\n"
 
     for u in units:
 
@@ -166,7 +154,8 @@ def generate_message_by_eval( units ):
         if u['Hosted in:'] != "USA":
             continue
 
-        if "Z15" in u['Name']: # BAD WAY TO DO THIS!... FIND A WAY TO INCLUDE ONLY BITCOIN MINERS
+        # TODO - BAD WAY TO DO THIS!... FIND A WAY TO INCLUDE ONLY BITCOIN MINERS
+        if "Z15" in u['Name']:
             continue
 
         costEff = math.floor(u['Price:'] / u['Hashrate:'])
@@ -186,29 +175,42 @@ def generate_message_by_eval( units ):
             + "Min Order: " + str(u["Minimum Order:"]) + " | " \
             + "Certified Reseller: " + str(u["Certified Reseller:"]) \
             + "\nLink: " + str(u['Link:']) \
-            + "\n"
+            + "\n\n"
 
     return msg
 
 
 
+###############################
+def updateMsgFileAndEmail( msg ):
+    msgFile = open("last_msg.txt", 'w')
+    msgFile.write(msg)
+    msgFile.close()
 
-
-
+    easy_notify.sendalert(msg, alertSubject, toList.toList)
 
 
 
 ##########################
 if __name__ == "__main__":
 
-    units = DOMinate(filen='out.txt', sleeptime=1)
-    #units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
+    #units = DOMinate(filen='out.txt', sleeptime=1)
+    units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
     
     msg = generate_message_by_eval( units )
 
-    # COMPARE MSG WITH LAST MSG... (save to file?)
-    # IF DIFFERENT:
-        # EMAIL THAT SHIT!
-    
-    easy_notify.sendalert(msg, alertSubject, toList.toList)
-    
+    try:
+        msgFile = open("last_msg.txt", "r")
+        last_msg = msgFile.read()
+        msgFile.close()
+
+        if last_msg != msg:
+            print("NEW MATCHES :: updating last_msg.txt and sending email!")
+            updateMsgFileAndEmail( msg )
+        else:
+            print("no new matches found... NOT emailing.")
+    except:
+        print("last_msg.txt not found... making file and emailing!")
+        updateMsgFileAndEmail( msg )
+    else:
+        pass
