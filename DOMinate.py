@@ -102,7 +102,7 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
                 # LINK
                 # ['w-full','relative','pb-5/10','overflow-hidden','rounded-15px','cursor-pointer']
-                lnk = g.find(lambda tag: tag.name == 'div' and tag.get('class') == ['w-full','relative','pb-5/10','overflow-hidden','rounded-15px','cursor-pointer'])\.get('href')
+                lnk = g.find(lambda tag: tag.name == 'div' and tag.get('class') == ['w-full','relative','pb-5/10','overflow-hidden','rounded-15px','cursor-pointer']).get('href')
                 unit['Link:'] = "https://compassmining.io" + lnk
 
                 # <p class="pt-1 text-sm font-bold leading-none font-sans">Hosted in </p>
@@ -185,7 +185,7 @@ def generate_message_by_eval( units ):
             + "Online date: " + str(u["Online date:"]) + " | " \
             + "Min Order: " + str(u["Minimum Order:"]) + " | " \
             + "Certified Reseller: " + str(u["Certified Reseller:"]) \
-            + "\nLink:" + "" \
+            + "\nLink: " + str(u['Link:']) \
             + "\n"
 
     return msg
