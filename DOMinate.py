@@ -13,8 +13,8 @@ import toList # toList=["...@gmail.com", "..."]
 #############################################################
 ####### options
 #############################################################
-#chromedriverpath = '/usr/bin/chromedriver' # RPI
-chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
+chromedriverpath = '/usr/bin/chromedriver' # RPI
+#chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
 
 # What do you want to name the CSV file?
 csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
@@ -212,5 +212,3 @@ if __name__ == "__main__":
     except:
         print("last_msg.txt not found... making file and emailing!")
         updateMsgFileAndEmail( msg )
-    else:
-        pass
