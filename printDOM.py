@@ -1,3 +1,13 @@
+# she bang
+# TODO's
+# put __name__ here to pass URL parameter into script
+# ALSO... name of outfile.
+# also.. help if you do it wrong
+
+# python3 printDOM.py > out.txt
+
+
+
 import os
 
 from bs4 import BeautifulSoup
@@ -17,13 +27,6 @@ URL = "https://compassmining.io/hardware"
 
 
 
-
-
-# put __name__ here to pass URL parameter into script
-# ALSO... name of outfile.
-# also.. help if you do it wrong
-
-# python3 printDOM.py > out.txt
 
 
 opts = Options()

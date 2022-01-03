@@ -3,18 +3,18 @@
 import smtplib, ssl
 import sys
 
-#from easy_notify_credentials import *
-import easy_notify_credentials
+#from credentials import *
+import credentials
 
-def sendalert(message, subject="alert", tolist=easy_notify_credentials.easynotify_RECEIVER):
+def sendalert(message, subject="alert", tolist=credentials.easynotify_RECEIVER):
 # returns {} if successful
 # TODO - this is a maturing module.. I need mature comments, you bitch!
     context = ssl.create_default_context()
     messagetosend = "Subject: {}\n\n{}".format(subject, message)
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
-        server.login(easy_notify_credentials.easynotify_SENDER, easy_notify_credentials.easynotify_SENDER_psk)
-        senterrors = server.sendmail(easy_notify_credentials.easynotify_SENDER, tolist, messagetosend)
+        server.login(credentials.easynotify_SENDER, credentials.easynotify_SENDER_psk)
+        senterrors = server.sendmail(credentials.easynotify_SENDER, tolist, messagetosend)
         server.quit()
 
         ### TODO THIS IS A HUGE PROBLEM.. IF I HAVE MISSION CRITICAL FAILURES AND
