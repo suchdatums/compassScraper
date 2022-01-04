@@ -7,7 +7,7 @@ echo
 # TODO - this should be rewritten... I should use environment variables instead
 
 
-fname="easy_notify_credentials.py"
+fname="credentials.py"
 fullpath="./$fname"
 
 
