@@ -27,6 +27,7 @@ stripUnits = True     # Allowed: True / False
 # subject line of email
 alertSubject="Compass Hardware Scrape Criteria Match!"
 
+criteria_Eff = 100
 
 
 
@@ -170,7 +171,7 @@ def generate_message_by_eval( units ):
             continue
 
         costEff = math.floor(u['Price:'] / u['Hashrate:'])
-        if costEff > 100:
+        if costEff > criteria_Eff:
             continue
     
         print(u['Name'], "\teff:", costEff)
