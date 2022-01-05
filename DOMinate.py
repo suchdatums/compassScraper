@@ -182,12 +182,13 @@ def generate_message_by_eval( units ):
 
 
 ###############################
-def updateMsgFileAndEmail( msg ):
+def emailAndUpdate( msg ):
+    #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
+    easy_notify.sendalert(msg, alertSubject, toList.toList)
+
     msgFile = open("last_msg.txt", 'w')
     msgFile.write(msg)
     msgFile.close()
-
-    easy_notify.sendalert(msg, alertSubject, toList.toList)
 
 
 
@@ -206,9 +207,9 @@ if __name__ == "__main__":
 
         if last_msg != msg:
             print("NEW MATCHES :: updating last_msg.txt and sending email!")
-            updateMsgFileAndEmail( msg )
+            emailAndUpdate( msg )
         else:
             print("no new matches found... NOT emailing.")
     except:
         print("last_msg.txt not found... making file and emailing!")
-        updateMsgFileAndEmail( msg )
+        emailAndUpdate( msg )

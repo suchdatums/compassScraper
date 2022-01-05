@@ -5,6 +5,7 @@ echo
 echo
 echo "!!!!!!!!!!!!!!!!!!"
 echo "karen is triggered $(date +%s)"
+# TODO what the fuck karen.. speak english... change this date format to human readable
 echo "running DOMinate.py"
 # stderr to stdout so it shows up in karen.log when run.sh calls karen.sh
 python3 ./DOMinate.py 2>&1
