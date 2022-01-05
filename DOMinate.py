@@ -4,7 +4,8 @@ import os, time, csv, re, math
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import WebDriverException
 from bs4 import BeautifulSoup
 
 import easy_notify
@@ -13,8 +14,8 @@ import toList # toList=["...@gmail.com", "..."]
 #############################################################
 ####### options
 #############################################################
-chromedriverpath = '/usr/bin/chromedriver' # RPI
-#chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
+#chromedriverpath = '/usr/bin/chromedriver' # RPI
+chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
 
 # What do you want to name the CSV file?
 csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
@@ -48,8 +49,17 @@ def DOMinate(URL="", sleeptime=3, filen=None):
         opts = Options()
         opts.add_argument(" --headless")
         driver = webdriver.Chrome( chromedriverpath , options=opts)
-        driver.get(URL)
+        # BUG - SQUASH THIS ANNOYING BULLSHIT PLZZ....
+        #./DOMinate.py:51: DeprecationWarning: executable_path has been deprecated, please pass in a Service object
+        # driver = webdriver.Chrome( chromedriverpath , options=opts)
+
+        try:
+            driver.get(URL)
+        except WebDriverException:
+            print("driver.get(URL) threw an exception - maybe the website is down")
+            exit(1)
         #TODO - log success here
+
         print(f"napping for {sleeptime} seconds so the DOM can cook...")
         time.sleep( sleeptime )
         html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
@@ -146,7 +156,8 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 def generate_message_by_eval( units ):
     
     msg = ""
-    #msg += "found units with UNDER $100 per terahash:\n\n"
+
+    print(">> UNITS FOUND <<")
 
     for u in units:
 
@@ -159,7 +170,7 @@ def generate_message_by_eval( units ):
             continue
 
         costEff = math.floor(u['Price:'] / u['Hashrate:'])
-        if costEff > 100:
+        if costEff > 50:
             continue
     
         print(u['Name'], "\teff:", costEff)
@@ -177,8 +188,8 @@ def generate_message_by_eval( units ):
             + "\nLink: " + str(u['Link:']) \
             + "\n\n"
 
+    print(">> END OF LIST <<")
     return msg
-
 
 
 ###############################
@@ -195,10 +206,18 @@ def emailAndUpdate( msg ):
 ##########################
 if __name__ == "__main__":
 
+    URL = "https://compassmining.io/hardware"
+
     #units = DOMinate(filen='out.txt', sleeptime=1)
-    units = DOMinate(URL = "https://compassmining.io/hardware", sleeptime=3) # add criteria parameter
+    units = DOMinate(URL=URL, sleeptime=3) # add criteria parameter
     
     msg = generate_message_by_eval( units )
+
+    # BUG - blank email bug >.<
+    if msg == "":
+        # OR... NO UNITS FOUND!!
+        print("NO UNITS FOUND - exiting.")
+        exit(1)
 
     try:
         msgFile = open("last_msg.txt", "r")
@@ -213,3 +232,10 @@ if __name__ == "__main__":
     except:
         print("last_msg.txt not found... making file and emailing!")
         emailAndUpdate( msg )
+    
+    exit(0) # SCHWEEEEEE
+
+
+# BUG
+# squished
+# https://stackoverflow.com/questions/65372252/selenium-python-page-down-unknown-error-neterr-name-not-resolved/65372437
