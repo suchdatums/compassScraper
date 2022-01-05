@@ -170,7 +170,7 @@ def generate_message_by_eval( units ):
             continue
 
         costEff = math.floor(u['Price:'] / u['Hashrate:'])
-        if costEff > 50:
+        if costEff > 100:
             continue
     
         print(u['Name'], "\teff:", costEff)
