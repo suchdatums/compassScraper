@@ -215,8 +215,7 @@ if __name__ == "__main__":
 
     # BUG - blank email bug >.<
     if msg == "":
-        # OR... NO UNITS FOUND!!
-        print("NO UNITS FOUND - exiting.")
+        print("no units found under current search criteria - exiting.")
         exit(1)
 
     try:
