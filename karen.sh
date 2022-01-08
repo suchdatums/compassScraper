@@ -9,6 +9,7 @@ echo "karen is triggered $(date +%s)"
 echo "running DOMinate.py"
 # stderr to stdout so it shows up in karen.log when run.sh calls karen.sh
 python3 ./DOMinate.py 2>&1
+#TODO make a timer, inside DOMinate.py... to see how LONG it takes to load the page
 echo "./DOMinate.py DONE : ERROR: $?"
 #echo "running diff"
 #echo
