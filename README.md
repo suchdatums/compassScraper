@@ -62,3 +62,8 @@ crontab -e
 
 # ensure variables in DOMinate.py are correct
 most notably, chromedriverpath
+
+
+# this is run by crontab -e
+example:
+*/30 * * * * /home/$USER/$PROJECT_FOLDER/scrape

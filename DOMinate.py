@@ -209,7 +209,7 @@ if __name__ == "__main__":
 
     URL = "https://compassmining.io/hardware"
 
-    #units = DOMinate(filen='out.txt', sleeptime=1)
+    #units = DOMinate(filen='./out.txt', sleeptime=1)
     units = DOMinate(URL=URL, sleeptime=3) # add criteria parameter
     
     msg = generate_message_by_eval( units )

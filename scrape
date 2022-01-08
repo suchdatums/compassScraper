@@ -1,6 +1,0 @@
-# this is run by crontab -e
-# example:
-# */30 * * * * /home/$USER/$PROJECT_FOLDER/scrape
-
-# stderr to stdout and stdout to file
-runDOMinate.sh >> ./DOMinate.out 2>&1
