@@ -12,14 +12,17 @@ import easy_notify
 import toList # toList=["...@gmail.com", "..."]
 
 #############################################################
+####### options
+#############################################################
+#chromedriverpath = '/usr/bin/chromedriver' # RPI
+chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
+
 # What do you want to name the CSV file?
-# Allowed: anything inside single or double quotes
-csv_file = "scraped.csv"
+csv_file = "scraped.csv"      # Allowed: anything inside single or double quotes
 
 # this will strip the units (100 TH/s) --> (100), ($19,000) --> (19000) ...technically all non-numeric characters
 # I THINK I NEED THIS... BECAUSE I'M GOING TO BE USING THE NUMBERS IN MATH.. AND IDON'T WANT TO HAVE TO SCRAPE THAT SHIT OFF LATER
-# Allowed: True / False
-stripUnits = True
+stripUnits = True     # Allowed: True / False
 
 # subject line of email
 alertSubject="Compass Hardware Scrape Criteria Match!"
@@ -150,8 +153,6 @@ def DOMinate(URL="", sleeptime=3, filen=None):
 
 
 
-
-
 ###############################
 def generate_message_by_eval( units ):
     
@@ -192,8 +193,6 @@ def generate_message_by_eval( units ):
     return msg
 
 
-
-
 ###############################
 def emailAndUpdate( msg ):
     #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
@@ -202,8 +201,6 @@ def emailAndUpdate( msg ):
     msgFile = open("last_msg.txt", 'w')
     msgFile.write(msg)
     msgFile.close()
-
-
 
 
 
@@ -237,4 +234,3 @@ if __name__ == "__main__":
         emailAndUpdate( msg )
     
     exit(0) # SCHWEEEEEE
-

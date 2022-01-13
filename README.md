@@ -49,6 +49,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 pip install bs4 selenium lxml requests
+pip3 install webdriver_manager
 ```
 
 # configure it to run...
