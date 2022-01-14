@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 
-import smtplib, ssl
-import sys
+import smtplib, ssl, sys
 
-#from credentials import *
 import credentials
 
+################################################################################
 def sendalert(message, subject="alert", tolist=credentials.easynotify_RECEIVER):
-# returns {} if successful
-# TODO - this is a maturing module.. I need mature comments, you bitch!
     context = ssl.create_default_context()
     messagetosend = "Subject: {}\n\n{}".format(subject, message)
 
@@ -16,16 +13,12 @@ def sendalert(message, subject="alert", tolist=credentials.easynotify_RECEIVER):
         server.login(credentials.easynotify_SENDER, credentials.easynotify_SENDER_psk)
         senterrors = server.sendmail(credentials.easynotify_SENDER, tolist, messagetosend)
         server.quit()
-
-        ### TODO THIS IS A HUGE PROBLEM.. IF I HAVE MISSION CRITICAL FAILURES AND
-        ### NO NOTIFICATION COMES OUT.. HOW DO I FAIL GRACEFULLY??
-        #if {} == senterrors:
-        #    print("success")
-        #else:
-        #    print(senterrors)
-
         return senterrors
 
+
+
+
+###########################
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print()

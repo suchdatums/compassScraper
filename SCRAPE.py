@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, time, csv, re, math
+import time, csv, re, math
 
 import pprint
 
@@ -34,6 +34,15 @@ csv_columns = [
 
 
 
+# GET THE DOM...
+# GET ALL THE LINKS FOR THE UNITS
+# SCRAPE LINK BY LINK AND MAKE SCRAPED.CSV
+# REMOVE DUPLICATES AND OTHER __SHIT__ WE DON'T WANT
+# SORT UNITS ACCORDING TO EFF:
+# EVALUATE IF ANY OF THE UNITS MEET CRITERIA
+# IF CHANGED from last emailing
+# EMAIL THOSE THAT DO
+# LOG EVERYTHING
 ##########################
 if __name__ == "__main__":
     print("\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -74,10 +83,6 @@ if __name__ == "__main__":
 
         if found == []: # solana miner, etc
             continue
-
-        #for f in found:
-            #units.append( f )
-            #int( re.sub("[^0-9]","",a.next_sibling.text) ) # REMOVE UNITS (ALL NON NUMERALS)
         
         with open(csv_filename, 'a') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -86,9 +91,10 @@ if __name__ == "__main__":
                 units.append( f )
         #break # TODO - DEBUG ONLY
 
+
+    #int( re.sub("[^0-9]","",a.next_sibling.text) ) # REMOVE UNITS (ALL NON NUMERALS)
+    
     # units = compassUnitScraper.tidyUnits( units )
-
-
 
     endtime = time.time()
     sec = int( (endtime - starttime) / 60 )
@@ -99,15 +105,6 @@ if __name__ == "__main__":
 
 
 
-# GET THE DOM...
-# GET ALL THE LINKS FOR THE UNITS
-# SCRAPE LINK BY LINK AND MAKE SCRAPED.CSV
-# REMOVE DUPLICATES AND OTHER __SHIT__ WE DON'T WANT
-# SORT UNITS ACCORDING TO EFF:
-# EVALUATE IF ANY OF THE UNITS MEET CRITERIA
-# IF CHANGED from last emailing
-# EMAIL THOSE THAT DO
-# LOG EVERYTHING
 
 
 

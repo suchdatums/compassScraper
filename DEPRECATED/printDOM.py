@@ -6,7 +6,6 @@
 
 # python3 printDOM.py > out.txt
 
-
 import os
 
 from bs4 import BeautifulSoup
@@ -18,7 +17,6 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 from time import sleep
-
 
 #chromedriverpath = '/usr/bin/chromedriver' # RPI
 #chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
