@@ -48,7 +48,7 @@ if __name__ == "__main__":
     print("\n\n\n\n\n\n\n\n\n\n\n\n")
     print("running SCRAPE.py")
 
-    print(f"creating {f}")
+    print(f"creating {csv_filename}")
     # with open('scraped.csv', 'w') as csvfile:
     #     csvfile.writelines("")
 

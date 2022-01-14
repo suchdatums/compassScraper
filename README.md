@@ -68,3 +68,11 @@ most notably, chromedriverpath
 # this is run by crontab -e
 example:
 */30 * * * * /home/$USER/$PROJECT_FOLDER/scrape
+
+
+
+# known bugs...
+
+## squished and dead
+
+https://stackoverflow.com/questions/65372252/selenium-python-page-down-unknown-error-neterr-name-not-resolved/65372437
