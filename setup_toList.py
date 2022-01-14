@@ -33,3 +33,6 @@ print()
 
 with open("toList.py", 'w') as outfile:
     outfile.write(out)
+
+print()
+print("delete this file with\nrm setup_toList.py")

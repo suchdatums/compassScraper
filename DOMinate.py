@@ -1,18 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 # https://github.com/SergeyPirogov/webdriver_manager
-
-from bs4 import BeautifulSoup
 
 from time import sleep
 
 sleepfor = 10
 
-
-
+runningonMac = False
 
 ##################
 def getDOM( URL ):
@@ -20,8 +16,13 @@ def getDOM( URL ):
 
     opts = Options()
     opts.add_argument(" --headless")
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(print_first_line=False, log_level=0).install()), options=opts)
-    #driver.implicitly_wait(10) # seconds #TODO ugh... 
+
+    if runningonMac:
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager(print_first_line=False, log_level=0).install()), options=opts)
+    else:
+        # BUG - can't make it run on rpi the new way... just revert to old way *shrug*
+        driver = webdriver.Chrome( '/usr/bin/chromedriver' , options=opts)
+
     driver.get( URL )
 
     print(f"sleeping {sleepfor} seconds to cook the DOM...")
@@ -114,3 +115,11 @@ if __name__ == "__main__":
 #chromedriverpath = '/Users/noone/Downloads/chromedriver'# MAC
 #driver = webdriver.Chrome( chromedriverpath , options=opts)
 # https://stackoverflow.com/questions/64717302/deprecationwarning-executable-path-has-been-deprecated-selenium-python
+
+
+#driver.implicitly_wait(10) # seconds #TODO ugh... 
+
+
+# TODO - fail better
+#from selenium.common.exceptions import WebDriverException
+
