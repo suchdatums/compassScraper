@@ -5,10 +5,18 @@ from bs4 import BeautifulSoup
 
 import DOMinate
 
-loquacious = False
+#########################################################
+#### CRITERIA ####
+#########################################################
+# leave blank with (hosted = '') if you don't care where it's hosted
+hosted = ''
 
-hosted = 'United States'
-eff = 130
+# eff = (price / hash rate)
+eff = 100
+#########################################################
+
+
+loquacious = False
 
 
 

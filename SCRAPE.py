@@ -159,7 +159,7 @@ if __name__ == "__main__":
     sec = int( (endtime - starttime) / 60 )
     secsleep = len( links ) * DOMinate.sleepfor
     print(f"execution took < { sec } > minutes")
-    print(f"{secsleep/60} minutes spent sleeping")
+    print(f"{math.floor( secsleep/60 )} minutes spent sleeping")
     print("SCRAPE.py done")
 
 
