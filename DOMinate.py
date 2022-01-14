@@ -6,10 +6,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from time import sleep
 
+import platform
+
 sleepfor = 10
 
-runningonMac = False
-#runningonMac = True
 
 ##################
 def getDOM( URL ):
@@ -18,11 +18,20 @@ def getDOM( URL ):
     opts = Options()
     opts.add_argument(" --headless")
 
-    if runningonMac:
+    p = None
+
+    if platform.system() == 'Darwin':
+        p = 1
         driver = webdriver.Chrome(service=Service(ChromeDriverManager(print_first_line=False, log_level=0).install()), options=opts)
-    else:
+    
+    if platform.system() == 'Linux':
+        p = 1
         # BUG - can't make it run on rpi the new way... just revert to old way *shrug*
         driver = webdriver.Chrome( '/usr/bin/chromedriver' , options=opts)
+
+    if p == None:
+        print("NOT RUNNING ON LINUX OR DARWIN (MAC)... CAN'T HANDLE.. EXITING(1)")
+        exit(1)
 
     driver.get( URL )
 
