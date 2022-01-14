@@ -10,6 +10,8 @@ import compass_scrape
 import easy_notify
 import toList # toList=["...@gmail.com", "..."]
 
+DEBUG_QUICKRUN = False
+
 URL = "https://compassmining.io/hardware"
 baseURL = "https://compassmining.io"
 filename_DOM = '_DOM'
@@ -62,14 +64,12 @@ if __name__ == "__main__":
     starttime = time.time()
 
     ### 0 - get the DOM
-    # False - DEBUGGING ONLY...
-    if False:
-        # SCRAPE THE ACTUAL WEBSITE
+    if DEBUG_QUICKRUN: # LOAD FROM FILE (DEBUG ONLY FOR FASTER RUN)
+        theDOM = DOMinate.loadDOM( filename_DOM )
+    else: # SCRAPE THE ACTUAL WEBSITE
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
-    else:
-        # LOAD FROM FILE (DEBUG ONLY FOR FASTER RUN)
-        theDOM = DOMinate.loadDOM( filename_DOM )
+        
     soup = BeautifulSoup(theDOM, 'lxml')
 
 
@@ -97,7 +97,8 @@ if __name__ == "__main__":
                 units.append( f )
         
         # TODO debug only (only scrape and process first unit page... then continue to matching/email and exit)
-        break
+        if DEBUG_QUICKRUN:
+            break
 
     goodUnits = []
     for u in units:
