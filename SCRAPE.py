@@ -15,7 +15,20 @@ import toList # toList=["...@gmail.com", "..."]
 URL = "https://compassmining.io/hardware"
 baseURL = "https://compassmining.io"
 filename_DOM = 'theDOM'
+csv_filename = "scraped.csv"
 
+# THIS MUST BE IDENTIAL TO u = in compassUnitScraper
+csv_columns = [
+        "Name",
+        "Hashrate",
+        "Wattage",
+        "Facility",
+        "Hosting Rate",
+        "Estimated Online Date",
+        "Condition",
+        "Available Quantity",
+        "Price",
+        "Link"]
 
 
 
@@ -23,41 +36,66 @@ filename_DOM = 'theDOM'
 
 ##########################
 if __name__ == "__main__":
-    print("\n\n\n\n\n\n\n\n\n\n\n\n==============\nrunning SCRAPE.py")
+    print("\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("running SCRAPE.py")
 
-    if False: # TODO - DEBUGGING ONLY...
+    print(f"creating {f}")
+    # with open('scraped.csv', 'w') as csvfile:
+    #     csvfile.writelines("")
+
+    with open(csv_filename, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+        writer.writeheader()
+
+    starttime = time.time()
+
+    ### 0 - get the DOM
+    if True: # TODO - DEBUGGING ONLY...
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
     else:
         theDOM = DOMinate.loadDOM( filename_DOM )
-
     soup = BeautifulSoup(theDOM, 'lxml')
 
+
+
+
+    ### easy... get a list of unit pages
     linkSHIT = ['w-full','relative','md:mt-0','h-230px','overflow-hidden','rounded-15px','cursor-pointer']
     links = DOMinate.scrapeLinks( soup, linkSHIT, baseURL=baseURL )
+    
+    print("found these links:")
+    pprint.pprint( links )
+
+    ### GO TO EACH PAGE AND SCRAPE UNITS
     units = []
     for l in links:
-        unitsFound = compassUnitScraper.gatherUnits( l )
+        found = compassUnitScraper.gatherUnits( l )
 
-        if unitsFound == []: # solana miner, etc
-            pass
+        if found == []: # solana miner, etc
+            continue
 
-        units.append( compassUnitScraper.tidyUnits(unitsFound) )
-        break # TODO - DEBUG ONLY
+        #for f in found:
+            #units.append( f )
+            #int( re.sub("[^0-9]","",a.next_sibling.text) ) # REMOVE UNITS (ALL NON NUMERALS)
+        
+        with open(csv_filename, 'a') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+            for f in found:
+                writer.writerow( f )
+                units.append( f )
+        #break # TODO - DEBUG ONLY
 
-    # for u in units:
-    #     #print(u)
-    #     pprint.pprint( u )
+    # units = compassUnitScraper.tidyUnits( units )
 
 
 
-    # csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name",\
-    #         "Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:",\
-    #             "Shipping date:","Link:"]
-    # with open(csv_file, 'w') as csvfile:
-    #     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-    #     writer.writeheader()
-    #     writer.writerow(unit)
+    endtime = time.time()
+    sec = int( (endtime - starttime) / 60 )
+    secsleep = len( links ) * DOMinate.sleepfor
+    print(f"execution took < { sec } > minutes")
+    print(f"{secsleep} seconds slept sleeping")
+    print("SCRAPE.py done")
 
 
 
@@ -70,3 +108,26 @@ if __name__ == "__main__":
 # IF CHANGED from last emailing
 # EMAIL THOSE THAT DO
 # LOG EVERYTHING
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ### SAVE SCRAPED.SCV
+    # print('writing units to scraped.csv')
+    # with open('scraped.csv', 'w') as csvfile:
+    #     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+    #     writer.writeheader()
+    #     for u in units:
+    #         writer.writerow( u )
+    
