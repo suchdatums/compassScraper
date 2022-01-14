@@ -41,6 +41,7 @@ def sendfile_inline(filename, subject="file", tolist=credentials.easynotify_RECE
             return senterrors
 
 # https://stackoverflow.com/questions/23171140/how-do-i-send-an-email-with-a-csv-attachment-using-python
+# https://docs.python.org/3.4/library/email-examples.html
 #######################################################################################
 def sendcsv(filename, subject="file attached", tolist=credentials.easynotify_RECEIVER):
     username = credentials.easynotify_SENDER

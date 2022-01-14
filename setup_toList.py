@@ -31,5 +31,5 @@ print("writing toList.py:\n")
 print(out)
 print()
 
-with open("toList2.py", 'w') as outfile:
+with open("toList.py", 'w') as outfile:
     outfile.write(out)
