@@ -42,16 +42,16 @@ def sendfile_inline(tolist, subject, filename):
 
 
 
-# https://stackoverflow.com/questions/23171140/how-do-i-send-an-email-with-a-csv-attachment-using-python
-# https://docs.python.org/3.4/library/email-examples.html
+#https://stackoverflow.com/questions/23171140/how-do-i-send-an-email-with-a-csv-attachment-using-python
+#https://docs.python.org/3.4/library/email-examples.html
 #######################################################################################
-def sendcsv(tolist, subject, filename):
+def sendcsv(recip, subject, filename):
     username = credentials.easynotify_SENDER
     password = credentials.easynotify_SENDER_psk
 
     msg = MIMEMultipart()
     msg["From"] = credentials.easynotify_SENDER
-    msg["To"] = tolist
+    msg["To"] = recip
     msg["Subject"] = subject
     msg.preamble = "see attached"
 
@@ -86,8 +86,9 @@ def sendcsv(tolist, subject, filename):
     server = smtplib.SMTP("smtp.gmail.com:587") # 465
     server.starttls()
     server.login(username,password)
-    server.sendmail(credentials.easynotify_SENDER, tolist, msg.as_string())
+    server.sendmail(credentials.easynotify_SENDER, recip, msg.as_string())
     server.quit()
+
 
 
 

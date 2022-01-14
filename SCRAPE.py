@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     ### 0 - get the DOM
     # False - DEBUGGING ONLY...
-    if True:
+    if False:
         # SCRAPE THE ACTUAL WEBSITE
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                 units.append( f )
         
         # TODO debug only (only scrape and process first unit page... then continue to matching/email and exit)
-        #break
+        break
 
     goodUnits = []
     for u in units:
@@ -127,7 +127,8 @@ if __name__ == "__main__":
                 print("NEW MATCHES :: updating last_msg.txt and sending email!")
                 # TODO - MAKE INTO FUNCTION
                 #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
-                easy_notify.sendcsv( toList.toList, subjectline, csv_goodunits )
+                for t in toList.toList:
+                    easy_notify.sendcsv( t, subjectline, csv_goodunits )
 
                 with open('last_msg.txt', 'w') as csvfile:
                     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -140,7 +141,8 @@ if __name__ == "__main__":
             print("last_msg.txt not found... making file and emailing!")
             # TODO - MAKE INTO FUNCTION
             #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
-            easy_notify.sendcsv( toList.toList, subjectline, csv_goodunits )
+            for t in toList.toList:
+                easy_notify.sendcsv( t, subjectline, csv_goodunits )
 
             with open('last_msg.txt', 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
