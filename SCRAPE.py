@@ -54,9 +54,6 @@ if __name__ == "__main__":
     print("running SCRAPE.py")
 
     print(f"creating {csv_filename}")
-    # with open('scraped.csv', 'w') as csvfile:
-    #     csvfile.writelines("")
-
     with open(csv_filename, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
         writer.writeheader()
@@ -66,16 +63,18 @@ if __name__ == "__main__":
     ### 0 - get the DOM
     # False - DEBUGGING ONLY...
     if True:
+        # SCRAPE THE ACTUAL WEBSITE
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
     else:
+        # LOAD FROM FILE (DEBUG ONLY FOR FASTER RUN)
         theDOM = DOMinate.loadDOM( filename_DOM )
     soup = BeautifulSoup(theDOM, 'lxml')
 
 
 
 
-    ### easy... get a list of unit pages
+    ### easy... get a list links to unit pages
     linkSHIT = ['w-full','relative','md:mt-0','h-230px','overflow-hidden','rounded-15px','cursor-pointer']
     links = DOMinate.scrapeLinks( soup, linkSHIT, baseURL=baseURL )
     
@@ -96,10 +95,8 @@ if __name__ == "__main__":
                 writer.writerow( f )
                 units.append( f )
         
-        # TODO debug only
+        # TODO debug only (only scrape and process first unit page... then continue to matching/email and exit)
         #break
-    
-    # units = compassUnitScraper.stripUnits( units )
 
     goodUnits = []
     for u in units:
@@ -116,6 +113,7 @@ if __name__ == "__main__":
             for y in goodUnits:
                 writer.writerow( y )
         
+        # TODO - THIS IS MESSY... MAKE INTO A FUNCTION
         try:
             msgFile = open("last_msg.txt", "r")
             last_msg = msgFile.read()
@@ -126,11 +124,21 @@ if __name__ == "__main__":
 
             if last_msg != this:
                 print("NEW MATCHES :: updating last_msg.txt and sending email!")
+                # TODO - MAKE INTO FUNCTION
+                #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
                 easy_notify.sendcsv( csv_goodunits, subjectline )
+
+                with open('last_msg.txt', 'w') as csvfile:
+                    writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                    writer.writeheader()
+                    for y in goodUnits:
+                        writer.writerow( y )
             else:
                 print("no new matches found... NOT emailing.")
         except:
             print("last_msg.txt not found... making file and emailing!")
+            # TODO - MAKE INTO FUNCTION
+            #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
             easy_notify.sendcsv( csv_goodunits, subjectline )
 
             with open('last_msg.txt', 'w') as csvfile:
@@ -150,18 +158,6 @@ if __name__ == "__main__":
     print(f"execution took < { sec } > minutes")
     print(f"{secsleep} seconds slept sleeping")
     print("SCRAPE.py done")
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
