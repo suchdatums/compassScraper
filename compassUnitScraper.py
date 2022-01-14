@@ -85,7 +85,7 @@ def gatherUnits( URL ):
         print("gatherUnits returning:")
         pprint( allUnits )
 
-    print(f"gathered <{len(allUnits)}> units\n")
+    print(f"gathered <{len(allUnits)}> units")
     return allUnits
 
 

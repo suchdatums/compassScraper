@@ -40,6 +40,7 @@ def sendfile_inline(filename, subject="file", tolist=credentials.easynotify_RECE
             server.quit()
             return senterrors
 
+# https://stackoverflow.com/questions/23171140/how-do-i-send-an-email-with-a-csv-attachment-using-python
 #######################################################################################
 def sendcsv(filename, subject="file attached", tolist=credentials.easynotify_RECEIVER):
     username = credentials.easynotify_SENDER
@@ -86,19 +87,14 @@ def sendcsv(filename, subject="file attached", tolist=credentials.easynotify_REC
     server.quit()
 
 
-# ###########################
-# if __name__ == "__main__":
-#     if len(sys.argv) != 3:
-#         print()
-#         print("give only 2 arguments")
-#         print(f"eg: {str(sys.argv[0])} 'subject' 'message'")
-#         print("easy_notify.py 'PRICE ALERT: upper limit' 'hey, bro, the price is WAY up!'")
-#         exit()
-
-#     print(f"sending message:\nSubj:{str(sys.argv[1])}\nMesg:{str(sys.argv[2])}")
-#     sendalert(str(sys.argv[2]), str(sys.argv[1]))
-
-
 ###########################
 if __name__ == "__main__":
-    sendcsv('good_units.csv')
+    if len(sys.argv) != 3:
+        print()
+        print("give only 2 arguments")
+        print(f"eg: {str(sys.argv[0])} 'subject' 'message'")
+        print("easy_notify.py 'PRICE ALERT: upper limit' 'hey, bro, the price is WAY up!'")
+        exit()
+
+    print(f"sending message:\nSubj:{str(sys.argv[1])}\nMesg:{str(sys.argv[2])}")
+    sendalert(str(sys.argv[2]), str(sys.argv[1]))
