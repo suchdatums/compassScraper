@@ -9,6 +9,7 @@ from time import sleep
 sleepfor = 10
 
 runningonMac = False
+#runningonMac = True
 
 ##################
 def getDOM( URL ):
