@@ -9,10 +9,10 @@ import DOMinate
 #### CRITERIA ####
 #########################################################
 # leave blank with (hosted = '') if you don't care where it's hosted
-hosted = ''
+hosted = 'United States'
 
 # eff = (price / hash rate)
-eff = 100
+eff = 130
 #########################################################
 
 

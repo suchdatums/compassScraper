@@ -13,7 +13,9 @@ sudo apt update -y
 sudo apt upgrade -y
 
 sudo apt-get install chromium-chromedriver
-pip install webdriver-manager
+
+# THIS DOES NOT WORK YET ON RPI
+#pip install webdriver-manager
 ```
 
 # get the repo!
