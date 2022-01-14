@@ -5,8 +5,10 @@ from bs4 import BeautifulSoup
 
 import DOMinate
 
+loquacious = False
+
 hosted = ''
-eff = 140
+eff = 130
 
 #######################
 def gatherUnits( URL ):
@@ -76,8 +78,10 @@ def gatherUnits( URL ):
 
         allUnits.append( u )
 
-    print("gatherUnits returning:")
-    pprint( allUnits )
+    if loquacious:
+        print("gatherUnits returning:")
+        pprint( allUnits )
+
     return allUnits
 
 

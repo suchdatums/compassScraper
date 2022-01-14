@@ -14,11 +14,11 @@ import toList # toList=["...@gmail.com", "..."]
 
 URL = "https://compassmining.io/hardware"
 baseURL = "https://compassmining.io"
-filename_DOM = 'theDOM'
+filename_DOM = '_DOM'
 csv_filename = "scraped.csv"
 csv_goodunits = "good_units.csv"
 
-subjectline = f"compass scraper - criteria match ({compassUnitScraper.hosted} eff: {compassUnitScraper.eff})"
+subjectline = f"compass scraper - criteria match (Hosted: {compassUnitScraper.hosted} | eff: {compassUnitScraper.eff})"
 
 # THIS MUST BE IDENTIAL TO u = in compassUnitScraper
 csv_columns = [
