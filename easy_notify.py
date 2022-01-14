@@ -46,6 +46,7 @@ def sendfile_inline(tolist, subject, filename):
 #https://docs.python.org/3.4/library/email-examples.html
 #######################################################################################
 def sendcsv(recip, subject, filename):
+    # BUG - only ONE recip at a time.... put in a for loop to get all addresses...
     username = credentials.easynotify_SENDER
     password = credentials.easynotify_SENDER_psk
 
