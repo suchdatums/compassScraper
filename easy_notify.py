@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
-import smtplib, ssl, sys
-
-
-import mimetypes
+import sys
+import smtplib, ssl, mimetypes
 from email.mime.multipart import MIMEMultipart
 from email import encoders
 from email.message import Message
@@ -11,8 +9,6 @@ from email.mime.audio import MIMEAudio
 from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
 from email.mime.text import MIMEText
-
-
 
 import credentials
 
@@ -55,7 +51,7 @@ def sendcsv(toList, subject, filename):
 
     msg = MIMEMultipart()
     msg["From"] = credentials.easynotify_SENDER
-    msg["To"] = tolist
+    msg["To"] = toList
     msg["Subject"] = subject
     msg.preamble = "see attached"
 
