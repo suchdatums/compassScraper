@@ -57,7 +57,7 @@ configure run.sh to run with:
 ```
 crontab -e
 
-* * * * * /home/pi/run_DOMinate.sh
+0 * * * * /home/pi/run
 ```
 
 # ensure variables in DOMinate.py are correct
