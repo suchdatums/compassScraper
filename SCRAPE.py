@@ -16,6 +16,7 @@ URL = "https://compassmining.io/hardware"
 baseURL = "https://compassmining.io"
 filename_DOM = 'theDOM'
 csv_filename = "scraped.csv"
+csv_goodunits = "good_units.csv"
 
 # THIS MUST BE IDENTIAL TO u = in compassUnitScraper
 csv_columns = [
@@ -59,7 +60,8 @@ if __name__ == "__main__":
     starttime = time.time()
 
     ### 0 - get the DOM
-    if True: # TODO - DEBUGGING ONLY...
+    # TODO - DEBUGGING ONLY...
+    if False:
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
     else:
@@ -89,12 +91,25 @@ if __name__ == "__main__":
             for f in found:
                 writer.writerow( f )
                 units.append( f )
-        #break # TODO - DEBUG ONLY
-
-
-    #int( re.sub("[^0-9]","",a.next_sibling.text) ) # REMOVE UNITS (ALL NON NUMERALS)
+        
+        # TODO debug only
+        break
     
-    # units = compassUnitScraper.tidyUnits( units )
+    units = compassUnitScraper.stripUnits( units )
+
+    goodUnits = {}
+    for u in units:
+        y = compassUnitScraper.doesUnitMeetCriteria( u )
+        if y != 0:
+            goodUnits.append( y )
+
+    ### SAVE GOOD_UNITS.SCV
+    print(f'writing units to {csv_goodunits}')
+    with open(csv_goodunits, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+        writer.writeheader()
+        for y in goodUnits:
+            writer.writerow( y )
 
     endtime = time.time()
     sec = int( (endtime - starttime) / 60 )

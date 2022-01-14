@@ -1,9 +1,9 @@
 from pprint import pprint
+import re
+
 from bs4 import BeautifulSoup
-from bs4.formatter import HTMLFormatter
 
 import DOMinate
-
 
 #######################
 def gatherUnits( URL ):
@@ -78,18 +78,46 @@ def gatherUnits( URL ):
 
 
 
-
-
-
-
+# csv_columns = [
+#         "Name",
+#         "Hashrate",
+#         "Wattage",
+#         "Facility",
+#         "Hosting Rate",
+#         "Estimated Online Date",
+#         "Condition",
+#         "Available Quantity",
+#         "Price",
+#         "Link"]
 #######################
-def tidyUnits( units ):
-    return units
+def stripUnits( units ):
+    tidied = units
+
+    # REMOVE ALL NON NUMERALS (SO WE CAN DO MATH WITH THEM...)
+    for t in tidied:
+        t["Hashrate"] = int( re.sub("[^0-9]","", t["Hashrate"]) )
+        t["Wattage"] = int( re.sub("[^0-9]","", t["Wattage"]) )
+        t["Price"] = int( re.sub("[^0-9]","", t["Price"]) )
+
+    return tidied
 
 
 
-
-
+# csv_columns = [
+#         "Name",
+#         "Hashrate",
+#         "Wattage",
+#         "Facility",
+#         "Hosting Rate",
+#         "Estimated Online Date",
+#         "Condition",
+#         "Available Quantity",
+#         "Price",
+#         "Link"]
+#############################
+def doesUnitMeetCriteria( u ):
+    if not "Home" in u["Facility"]:
+        return 0
 
 
 
