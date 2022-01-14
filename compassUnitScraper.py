@@ -4,6 +4,8 @@ from bs4.formatter import HTMLFormatter
 
 import DOMinate
 
+
+#######################
 def gatherUnits( URL ):
     """
 0 get the DOM of site
@@ -25,13 +27,13 @@ def gatherUnits( URL ):
     # The WhatsMiner M32 by MicroBT is a SHA256 ASIC miner that was released in March 2020. This mining machine has a maximum hashrate of 66 TH/s for a power consumption of 3300 watts, and is a popular choice for Bitcoin miners.Hashrate:66 TH/s Power:3300 Watts Algorithm:SHA256 View Buying Options
     lookFOR = ['inline-block','relative','rounded-16px','w-full','lg:shadow-sm','text-left','bg-white','bg-white','p-8','p-5']
     g = soup.find(lambda tag: tag.name == 'div' and tag.get('class') == lookFOR)
-    #hashrate = g.text.split("Hashrate:")[1].split()[0]
-    #wattage = g.text.split("Power:")[1].split()[0]
+    hashrate = g.text.split("Hashrate:")[1].split()[0]
+    wattage = g.text.split("Power:")[1].split()[0]
     algo = g.text.split("Algorithm:")[1].split()[0]
 
     if algo != "SHA256":
         print("these miners don't mine Bitcoin...")
-        return 0
+        return []
     
     ### 222222222222222222222222222222222222222222222222222222
     # h3 class
@@ -44,33 +46,29 @@ def gatherUnits( URL ):
     rowSHIT = ['hover:bg-gray-70']
     for rows in soup.find_all((lambda tag: tag.name == 'tr' and tag.get('class') == rowSHIT)):
 
-        u = {
-            "Name" : name,
-            "Facility" : 0,
-            "Hosting Rate" : 0,
-            "Estimated Online Date" : 0,
-            "Condition" : 0,
-            "Available Quantity" : 0,
-            "Price" : 0
-        }
-
-        # <td>
-        # TABLE DATUM
+        # <td> TABLE DATUM
         datumSHIT = ['px-6','py-4','whitespace-nowrap']
         datumSHIT2 = ['px-6','py-4','whitespace-nowrap','text-sm']
         data = []
         for d in rows.find_all((lambda tag: tag.name == 'td' and (tag.get('class') == datumSHIT or tag.get('class') == datumSHIT2))):
             data.append( d.text )
 
-        u['Facility'] = data[0]
-        u['Hosting Rate'] = data[1]
-        u['Estimated Online Date'] = data[2]
-        u['Condition'] = data[3]
-        u['Available Quantity'] = data[4]
-        u['Price'] = data[5]
+        u = {
+            "Name" : name,
+            "Hashrate" : hashrate,
+            "Wattage" : wattage,
+            "Facility" : data[0],
+            "Hosting Rate" : data[1],
+            "Estimated Online Date" : data[2],
+            "Condition" : data[3],
+            "Available Quantity" : data[4],
+            "Price" : data[5],
+            "Link": URL
+        }
+
         allUnits.append( u )
 
-    print("returning:")
+    print("gatherUnits returning:")
     pprint( allUnits )
     return allUnits
 
@@ -84,29 +82,9 @@ def gatherUnits( URL ):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+#######################
 def tidyUnits( units ):
     return units
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 from time import sleep
 
-sleepfor = 3
+sleepfor = 10
 
 
 
@@ -21,6 +21,7 @@ def getDOM( URL ):
     opts = Options()
     opts.add_argument(" --headless")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager(print_first_line=False, log_level=0).install()), options=opts)
+    driver.implicitly_wait(10) # seconds
     driver.get( URL )
 
     #print(f"sleeping {sleepfor} seconds to cook the DOM")
