@@ -13,6 +13,7 @@ sudo apt update -y
 sudo apt upgrade -y
 
 sudo apt-get install chromium-chromedriver
+pip install webdriver-manager
 ```
 
 # get the repo!
@@ -28,14 +29,12 @@ rm -r ./$repo/
 
 # make toList.py
 ```
-echo "toList=['@gmail.com', '@gmail.com', '@gmail.com']" > ~/toList.py
-nano toList.py
+python3 setup_toList.py
 ```
-TODO write a script to do this... like setup_easy_notify.sh
 
 # change permissions
 ```
-chmod +x ~/run_DOMinate.sh
+chmod +x run
 ```
 
 # setup the software to scrape... 
