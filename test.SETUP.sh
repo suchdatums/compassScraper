@@ -20,7 +20,7 @@ mv -f ./$repo/* ~/
 rm -r ./$repo/
 
 
-chmod +x scrape
+chmod +x run
 
 
 
