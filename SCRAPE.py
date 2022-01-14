@@ -53,6 +53,9 @@ if __name__ == "__main__":
     print("\n\n\n\n\n\n\n\n\n\n\n\n")
     print("running SCRAPE.py")
 
+    print(f"finding units hosted: {compassUnitScraper.hosted}")
+    print(f"eff must be {compassUnitScraper.eff} or less")
+
     print(f"creating {csv_filename}")
     with open(csv_filename, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)

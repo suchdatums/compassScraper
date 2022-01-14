@@ -8,7 +8,7 @@ import DOMinate
 loquacious = False
 
 hosted = 'United States'
-eff = 120
+eff = 130
 
 
 
@@ -85,6 +85,7 @@ def gatherUnits( URL ):
         print("gatherUnits returning:")
         pprint( allUnits )
 
+    print(f"gathered <{len(allUnits)}> units\n")
     return allUnits
 
 

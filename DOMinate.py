@@ -21,10 +21,10 @@ def getDOM( URL ):
     opts = Options()
     opts.add_argument(" --headless")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager(print_first_line=False, log_level=0).install()), options=opts)
-    driver.implicitly_wait(10) # seconds
+    #driver.implicitly_wait(10) # seconds #TODO ugh... 
     driver.get( URL )
 
-    #print(f"sleeping {sleepfor} seconds to cook the DOM")
+    print(f"sleeping {sleepfor} seconds to cook the DOM...")
     sleep( sleepfor )
 
     html = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
