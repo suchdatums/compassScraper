@@ -2,6 +2,8 @@
 
 import os, time, csv, re, math
 
+import pprint
+
 from bs4 import BeautifulSoup
 
 import DOMinate
@@ -33,10 +35,30 @@ if __name__ == "__main__":
 
     linkSHIT = ['w-full','relative','md:mt-0','h-230px','overflow-hidden','rounded-15px','cursor-pointer']
     links = DOMinate.scrapeLinks( soup, linkSHIT, baseURL=baseURL )
-
+    units = []
     for l in links:
-        # REMEMBER... gatherUnits returns 0 if there were no bitoin miners found
-        print(f"units found: {compassUnitScraper.gatherUnits( l )}" )
+        unitsFound = compassUnitScraper.gatherUnits( l )
+
+        if unitsFound == []: # solana miner, etc
+            pass
+
+        units.append( compassUnitScraper.tidyUnits(unitsFound) )
+        break # TODO - DEBUG ONLY
+
+    # for u in units:
+    #     #print(u)
+    #     pprint.pprint( u )
+
+
+
+    # csv_columns = ["Certified Reseller:","Hosted in:","Second Hand:","Name",\
+    #         "Price:","Hashrate:","Energy Cons:","Minimum Order:","Online date:",\
+    #             "Shipping date:","Link:"]
+    # with open(csv_file, 'w') as csvfile:
+    #     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+    #     writer.writeheader()
+    #     writer.writerow(unit)
+
 
 
 # GET THE DOM...

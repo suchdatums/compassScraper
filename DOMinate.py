@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 from time import sleep
 
-sleepfor = 1
+sleepfor = 3
 
 
 
@@ -82,8 +82,16 @@ def loadDOM( filename ):
 if __name__ == "__main__":
     print(f"running __main__")
 
-    URL = input("URL: ")
-    filename = input("filename: ")
+    URL = input("URL : ")
+
+    defaultfilename = URL.split('/')[-1] + "_DOM"
+
+    filename = input(f"filename (default: {defaultfilename}) : ")
+
+    if filename == '':
+        filename = defaultfilename
+
+    print(f"saving {URL} to {filename}")
 
     saveDOM( getDOM( URL ), filename )
 
