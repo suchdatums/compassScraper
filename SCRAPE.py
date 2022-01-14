@@ -53,6 +53,9 @@ if __name__ == "__main__":
     print("\n\n\n\n\n\n\n\n\n\n\n\n")
     print("running SCRAPE.py")
 
+    if DEBUG_QUICKRUN:
+        print("DEBUG MODE\nDEBUG MODE\nDEBUG MODE\nDEBUG MODE\nDEBUG MODE\n")
+
     print(f"finding units hosted: {compass_scrape.hosted}")
     print(f"eff must be {compass_scrape.eff} or less")
 
