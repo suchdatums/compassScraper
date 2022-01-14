@@ -18,6 +18,8 @@ filename_DOM = 'theDOM'
 csv_filename = "scraped.csv"
 csv_goodunits = "good_units.csv"
 
+subjectline = f"compass scraper - criteria match ({compassUnitScraper.hosted} eff: {compassUnitScraper.eff})"
+
 # THIS MUST BE IDENTIAL TO u = in compassUnitScraper
 csv_columns = [
         "Name",
@@ -29,7 +31,9 @@ csv_columns = [
         "Condition",
         "Available Quantity",
         "Price",
-        "Link"]
+        "Link",
+        "price/hash"
+        ]
 
 
 
@@ -60,8 +64,8 @@ if __name__ == "__main__":
     starttime = time.time()
 
     ### 0 - get the DOM
-    # TODO - DEBUGGING ONLY...
-    if False:
+    # False - DEBUGGING ONLY...
+    if True:
         theDOM = DOMinate.getDOM( URL )
         DOMinate.saveDOM( theDOM, filename_DOM )
     else:
@@ -93,23 +97,52 @@ if __name__ == "__main__":
                 units.append( f )
         
         # TODO debug only
-        break
+        #break
     
-    units = compassUnitScraper.stripUnits( units )
+    # units = compassUnitScraper.stripUnits( units )
 
-    goodUnits = {}
+    goodUnits = []
     for u in units:
         y = compassUnitScraper.doesUnitMeetCriteria( u )
         if y != 0:
             goodUnits.append( y )
 
-    ### SAVE GOOD_UNITS.SCV
-    print(f'writing units to {csv_goodunits}')
-    with open(csv_goodunits, 'w') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-        writer.writeheader()
-        for y in goodUnits:
-            writer.writerow( y )
+    if len(goodUnits):
+        ### SAVE GOOD_UNITS.SCV
+        print(f'writing units to {csv_goodunits}')
+        with open(csv_goodunits, 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+            writer.writeheader()
+            for y in goodUnits:
+                writer.writerow( y )
+        
+        try:
+            msgFile = open("last_msg.txt", "r")
+            last_msg = msgFile.read()
+            msgFile.close()
+
+            csvfile = open(csv_goodunits, 'r')
+            this = csvfile.read()
+
+            if last_msg != this:
+                print("NEW MATCHES :: updating last_msg.txt and sending email!")
+                easy_notify.sendcsv( csv_goodunits, subjectline )
+            else:
+                print("no new matches found... NOT emailing.")
+        except:
+            print("last_msg.txt not found... making file and emailing!")
+            easy_notify.sendcsv( csv_goodunits, subjectline )
+
+            with open('last_msg.txt', 'w') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                writer.writeheader()
+                for y in goodUnits:
+                    writer.writerow( y )
+    else:
+        print("NO UNITS MEET CRITERIA")
+        print(f"deleting {csv_goodunits}")
+        with open(csv_goodunits, 'w') as csvfile:
+            pass
 
     endtime = time.time()
     sec = int( (endtime - starttime) / 60 )

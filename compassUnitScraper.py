@@ -1,9 +1,12 @@
 from pprint import pprint
-import re
+import re, math
 
 from bs4 import BeautifulSoup
 
 import DOMinate
+
+hosted = ''
+eff = 140
 
 #######################
 def gatherUnits( URL ):
@@ -16,7 +19,7 @@ def gatherUnits( URL ):
 3.1 (by looking at table headers)
     """
 
-    print(f"gathering all COMPASS units for url: {URL}")
+    print(f"gathering units: {URL}")
     
     allUnits = [] # WE RETURN THIS
     theDOM = DOMinate.getDOM( URL )
@@ -53,6 +56,10 @@ def gatherUnits( URL ):
         for d in rows.find_all((lambda tag: tag.name == 'td' and (tag.get('class') == datumSHIT or tag.get('class') == datumSHIT2))):
             data.append( d.text )
 
+        hash = int( re.sub("[^0-9]","", hashrate) )
+        #watt = int( re.sub("[^0-9]","", wattage )
+        price = int( re.sub("[^0-9]","", data[5]) )
+
         u = {
             "Name" : name,
             "Hashrate" : hashrate,
@@ -63,7 +70,8 @@ def gatherUnits( URL ):
             "Condition" : data[3],
             "Available Quantity" : data[4],
             "Price" : data[5],
-            "Link": URL
+            "Link": URL,
+            "price/hash" : math.floor(price / hash)
         }
 
         allUnits.append( u )
@@ -78,47 +86,25 @@ def gatherUnits( URL ):
 
 
 
-# csv_columns = [
-#         "Name",
-#         "Hashrate",
-#         "Wattage",
-#         "Facility",
-#         "Hosting Rate",
-#         "Estimated Online Date",
-#         "Condition",
-#         "Available Quantity",
-#         "Price",
-#         "Link"]
-#######################
-def stripUnits( units ):
-    tidied = units
-
-    # REMOVE ALL NON NUMERALS (SO WE CAN DO MATH WITH THEM...)
-    for t in tidied:
-        t["Hashrate"] = int( re.sub("[^0-9]","", t["Hashrate"]) )
-        t["Wattage"] = int( re.sub("[^0-9]","", t["Wattage"]) )
-        t["Price"] = int( re.sub("[^0-9]","", t["Price"]) )
-
-    return tidied
-
-
-
-# csv_columns = [
-#         "Name",
-#         "Hashrate",
-#         "Wattage",
-#         "Facility",
-#         "Hosting Rate",
-#         "Estimated Online Date",
-#         "Condition",
-#         "Available Quantity",
-#         "Price",
-#         "Link"]
 #############################
 def doesUnitMeetCriteria( u ):
-    if not "Home" in u["Facility"]:
+
+    if hosted != '':
+        if not hosted in u["Facility"]:
+            return 0
+
+    # hash = int( re.sub("[^0-9]","", u["Hashrate"]) )
+    # watt = int( re.sub("[^0-9]","", u["Wattage"]) )
+    # price = int( re.sub("[^0-9]","", u["Price"]) )
+
+    # eff = math.floor(price / hash)
+    # if eff > 200:
+    #     return 0
+    
+    if u["price/hash"] > eff:
         return 0
 
+    return u
 
 
 
