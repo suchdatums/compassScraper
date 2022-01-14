@@ -17,18 +17,21 @@ from email.mime.text import MIMEText
 import credentials
 
 ################################################################################
-def sendalert(message, subject="alert", tolist=credentials.easynotify_RECEIVER):
+def sendalert(toList, subject, message):
     context = ssl.create_default_context()
     messagetosend = "Subject: {}\n\n{}".format(subject, message)
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
         server.login(credentials.easynotify_SENDER, credentials.easynotify_SENDER_psk)
-        senterrors = server.sendmail(credentials.easynotify_SENDER, tolist, messagetosend)
+        senterrors = server.sendmail(credentials.easynotify_SENDER, toList, messagetosend)
         server.quit()
         return senterrors
 
+
+
+# TODO - this isn't done yet.. and it should only be used for text files... right?
 ################################################################################
-def sendfile_inline(filename, subject="file", tolist=credentials.easynotify_RECEIVER):
+def sendfile_inline(toList, subject, filename):
     with open(filename, 'r') as msgfile:
         message = msgfile.read()
         context = ssl.create_default_context()
@@ -36,14 +39,17 @@ def sendfile_inline(filename, subject="file", tolist=credentials.easynotify_RECE
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
             server.login(credentials.easynotify_SENDER, credentials.easynotify_SENDER_psk)
-            senterrors = server.sendmail(credentials.easynotify_SENDER, tolist, messagetosend)
+            senterrors = server.sendmail(credentials.easynotify_SENDER, toList, messagetosend)
             server.quit()
             return senterrors
+
+
+
 
 # https://stackoverflow.com/questions/23171140/how-do-i-send-an-email-with-a-csv-attachment-using-python
 # https://docs.python.org/3.4/library/email-examples.html
 #######################################################################################
-def sendcsv(filename, subject="file attached", tolist=credentials.easynotify_RECEIVER):
+def sendcsv(toList, subject, filename):
     username = credentials.easynotify_SENDER
     password = credentials.easynotify_SENDER_psk
 
@@ -84,18 +90,20 @@ def sendcsv(filename, subject="file attached", tolist=credentials.easynotify_REC
     server = smtplib.SMTP("smtp.gmail.com:587") # 465
     server.starttls()
     server.login(username,password)
-    server.sendmail(credentials.easynotify_SENDER, tolist, msg.as_string())
+    server.sendmail(credentials.easynotify_SENDER, toList, msg.as_string())
     server.quit()
+
+
+
 
 
 ###########################
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print()
-        print("give only 2 arguments")
-        print(f"eg: {str(sys.argv[0])} 'subject' 'message'")
-        print("easy_notify.py 'PRICE ALERT: upper limit' 'hey, bro, the price is WAY up!'")
+        print("give only 3 arguments")
+        print(f"eg: {str(sys.argv[0])} 'to' 'subject' 'message'")
         exit()
 
     print(f"sending message:\nSubj:{str(sys.argv[1])}\nMesg:{str(sys.argv[2])}")
-    sendalert(str(sys.argv[2]), str(sys.argv[1]))
+    sendalert(credentials.easynotify_RECEIVER, str(sys.argv[1]), str(sys.argv[2]))

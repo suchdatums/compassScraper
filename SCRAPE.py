@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-import time, csv, re, math
-
-import pprint
+import time, csv, math, pprint
 
 from bs4 import BeautifulSoup
 
 import DOMinate
-import compassUnitScraper
+import compass_scrape
 
 import easy_notify
 import toList # toList=["...@gmail.com", "..."]
@@ -18,7 +16,7 @@ filename_DOM = '_DOM'
 csv_filename = "scraped.csv"
 csv_goodunits = "good_units.csv"
 
-subjectline = f"compass scraper - criteria match (Hosted: '{compassUnitScraper.hosted}' | eff: {compassUnitScraper.eff})"
+subjectline = f"compass scraper - criteria match (Hosted: '{compass_scrape.hosted}' | eff: {compass_scrape.eff})"
 
 # THIS MUST BE IDENTIAL TO u = in compassUnitScraper
 csv_columns = [
@@ -53,8 +51,8 @@ if __name__ == "__main__":
     print("\n\n\n\n\n\n\n\n\n\n\n\n")
     print("running SCRAPE.py")
 
-    print(f"finding units hosted: {compassUnitScraper.hosted}")
-    print(f"eff must be {compassUnitScraper.eff} or less")
+    print(f"finding units hosted: {compass_scrape.hosted}")
+    print(f"eff must be {compass_scrape.eff} or less")
 
     print(f"creating {csv_filename} (every unit found will be placed in here)")
     with open(csv_filename, 'w') as csvfile:
@@ -87,7 +85,7 @@ if __name__ == "__main__":
     ### GO TO EACH PAGE AND SCRAPE UNITS
     units = []
     for l in links:
-        found = compassUnitScraper.gatherUnits( l )
+        found = compass_scrape.gatherUnits( l )
 
         if found == []: # solana miner, etc
             continue
@@ -103,7 +101,7 @@ if __name__ == "__main__":
 
     goodUnits = []
     for u in units:
-        y = compassUnitScraper.doesUnitMeetCriteria( u )
+        y = compass_scrape.doesUnitMeetCriteria( u )
         if y != 0:
             goodUnits.append( y )
 
@@ -129,7 +127,7 @@ if __name__ == "__main__":
                 print("NEW MATCHES :: updating last_msg.txt and sending email!")
                 # TODO - MAKE INTO FUNCTION
                 #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
-                easy_notify.sendcsv( csv_goodunits, subjectline )
+                easy_notify.sendcsv( toList.toList, subjectline, csv_goodunits )
 
                 with open('last_msg.txt', 'w') as csvfile:
                     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -142,7 +140,7 @@ if __name__ == "__main__":
             print("last_msg.txt not found... making file and emailing!")
             # TODO - MAKE INTO FUNCTION
             #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
-            easy_notify.sendcsv( csv_goodunits, subjectline )
+            easy_notify.sendcsv( toList.toList, subjectline, csv_goodunits )
 
             with open('last_msg.txt', 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
