@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 
+import sys
+sys.path.append(r'/Users/noone/myca')
+
 import time, csv, math, pprint
 
 from bs4 import BeautifulSoup
 
+# myca
 import DOMinate
-import compass_scrape
-
 import easy_notify
+
+
+import compass_scrape
 import toList # toList=["...@gmail.com", "..."]
 
 DEBUG_QUICKRUN = False
@@ -132,7 +137,7 @@ if __name__ == "__main__":
                 # TODO - MAKE INTO FUNCTION
                 #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
                 for t in toList.toList:
-                    easy_notify.sendcsv( t, subjectline, csv_goodunits )
+                    easy_notify.sendcsv( subjectline, csv_goodunits, t )
 
                 with open('last_msg.txt', 'w') as csvfile:
                     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -146,7 +151,7 @@ if __name__ == "__main__":
             # TODO - MAKE INTO FUNCTION
             #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
             for t in toList.toList:
-                easy_notify.sendcsv( t, subjectline, csv_goodunits )
+                easy_notify.sendcsv( subjectline, csv_goodunits, t )
 
             with open('last_msg.txt', 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
