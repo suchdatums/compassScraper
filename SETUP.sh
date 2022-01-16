@@ -15,17 +15,10 @@ source venv/bin/activate
 pip install bs4 selenium lxml requests
 pip3 install webdriver_manager
 
-# THIS REPO
-repo="DOMinate"
-url="https://github.com/suchdatums/$repo"
-git clone --depth=1 $url
-rm -rf ./$repo/.git
-rm ./$repo/.gitignore
-mv -f ./$repo/* ~/
-rm -r ./$repo/
-
+# INSTALL FILES
 chmod +x run
 
+# RUN SETUP OTHER SCRIPTS
 python3 setup_toList.py
 
 echo
