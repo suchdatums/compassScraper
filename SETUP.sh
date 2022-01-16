@@ -20,6 +20,7 @@ chmod +x run
 
 # RUN SETUP OTHER SCRIPTS
 python3 setup_toList.py
+sh myca/setup_easy_notify.sh
 
 echo
 echo "NOW SETUP CRONTAB:"
