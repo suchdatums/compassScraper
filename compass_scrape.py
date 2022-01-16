@@ -1,19 +1,16 @@
 import sys
-sys.path.append(r'./myca')
-
 import re, math
 from bs4 import BeautifulSoup
 from pprint import pprint
 
 # myca
+sys.path.append(r'./myca')
 import DOMinate
 
 #########################################################
 #### CRITERIA ####
 #########################################################
-
 import unit_criteria
-
 # # leave blank with (hosted = '') if you don't care where it's hosted
 # hosted = 'United States'
 

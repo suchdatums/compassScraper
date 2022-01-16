@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import sys
-sys.path.append(r'./myca')
-
 import time, csv, math, pprint
 from bs4 import BeautifulSoup
 
 # myca
+sys.path.append(r'./myca')
 import DOMinate
 import easy_notify
+import unit_criteria
 
 import compass_scrape
 import toList # toList=["...@gmail.com", "..."]
@@ -21,7 +21,7 @@ filename_DOM = '_DOM'
 csv_filename = "scraped.csv"
 csv_goodunits = "good_units.csv"
 
-subjectline = f"compass scraper - criteria match (Hosted: '{compass_scrape.hosted}' | eff: {compass_scrape.eff})"
+subjectline = f"compass scraper - criteria match (Hosted: '{unit_criteria.hosted}' | eff: {unit_criteria.eff})"
 
 # THIS MUST BE IDENTIAL TO u = in compassUnitScraper
 csv_columns = [
