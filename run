@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # stderr to stdout and stdout to file
-sh ./karen.sh >> ./karen.log 2>&1
+sh ./karen.sh >> ./karen.log > ./lastrun.log 2>&1
 
 # 0 * * * * /home/pi/run
