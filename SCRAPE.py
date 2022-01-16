@@ -53,14 +53,13 @@ csv_columns = [
 # LOG EVERYTHING
 ##########################
 if __name__ == "__main__":
-    print("\n\n\n\n\n\n\n\n\n\n\n\n")
     print("running SCRAPE.py")
 
     if DEBUG_QUICKRUN:
         print("DEBUG MODE\nDEBUG MODE\nDEBUG MODE\nDEBUG MODE\nDEBUG MODE\n")
 
-    print(f"finding units hosted: {compass_scrape.hosted}")
-    print(f"eff must be {compass_scrape.eff} or less")
+    print(f"finding units hosted: {unit_criteria.hosted}")
+    print(f"eff must be {unit_criteria.eff} or less")
 
     print(f"creating {csv_filename} (every unit found will be placed in here)")
     with open(csv_filename, 'w') as csvfile:

@@ -4,7 +4,6 @@ echo
 echo
 echo "!!!!!!!!!!!!!!!!!!"
 echo "karen is triggered $(date)"
-echo "running SCRAPE.py"
 # stderr to stdout so it shows up in karen.log when run.sh calls karen.sh
 python3 ./SCRAPE.py 2>&1
 echo "exit(): $?"
