@@ -1,3 +1,4 @@
 [submodule "myca"]
 	path = myca
 	url = https://github.com/suchdatums/myca.git
+	branch = main
