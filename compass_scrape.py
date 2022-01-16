@@ -11,11 +11,14 @@ import DOMinate
 #########################################################
 #### CRITERIA ####
 #########################################################
-# leave blank with (hosted = '') if you don't care where it's hosted
-hosted = 'United States'
 
-# eff = (price / hash rate)
-eff = 130
+import unit_criteria
+
+# # leave blank with (hosted = '') if you don't care where it's hosted
+# hosted = 'United States'
+
+# # eff = (price / hash rate)
+# eff = 130
 #########################################################
 
 
@@ -108,11 +111,11 @@ def gatherUnits( URL ):
 #############################
 def doesUnitMeetCriteria( u ):
 
-    if hosted != '':
-        if not hosted in u["Facility"]:
+    if unit_criteria.hosted != '':
+        if not unit_criteria.hosted in u["Facility"]:
             return 0
     
-    if u["price/hash"] > eff:
+    if u["price/hash"] > unit_criteria.eff:
         return 0
 
     return u
