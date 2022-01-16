@@ -9,7 +9,8 @@ sudo apt-get install chromium-chromedriver
 
 # PYTHON
 python3 -m venv venv
-source venv/bin/activate
+# source doesn't work... use dot?
+. venv/bin/activate
 # (MAC ONLY!!!)
 # python3 -m pip install --upgrade pip
 pip install bs4 selenium lxml requests

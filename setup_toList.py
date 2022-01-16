@@ -1,8 +1,12 @@
+print("\n\n")
+print("setup_toList.py")
+print("ENTER THE EMAIL ADDRESS YOU WANT TO RECEIVE SCRAPING ALERTS:")
+
 emails = []
 out = 'toList=['
 
 while True:
-    inp = input("leave blank to exit script\nenter email address: ")
+    inp = input("\nleave blank to exit script\nenter email address: ")
 
     if inp == '':
             break
