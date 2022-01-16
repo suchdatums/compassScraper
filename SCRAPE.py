@@ -134,7 +134,7 @@ if __name__ == "__main__":
                 # TODO - MAKE INTO FUNCTION
                 #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
                 for t in toList.toList:
-                    myca.easy_notify.sendcsv( subjectline, csv_goodunits, t )
+                    easy_notify.sendcsv( subjectline, csv_goodunits, t )
 
                 with open('last_msg.txt', 'w') as csvfile:
                     writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
             # TODO - MAKE INTO FUNCTION
             #  BUG FIX - this needs to come first!  If the message didn't get out.. then don't make a file saying last_msg... it makes a bug if/WHEN the email program FAILS after first-run/install...
             for t in toList.toList:
-                myca.easy_notify.sendcsv( subjectline, csv_goodunits, t )
+                easy_notify.sendcsv( subjectline, csv_goodunits, t )
 
             with open('last_msg.txt', 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
@@ -163,7 +163,7 @@ if __name__ == "__main__":
 
     endtime = time.time()
     sec = int( (endtime - starttime) / 60 )
-    secsleep = len( links ) * myca.DOMinate.sleepfor
+    secsleep = len( links ) * DOMinate.sleepfor
     print(f"execution took < { sec } > minutes")
     print(f"{math.floor( secsleep/60 )} minutes spent sleeping")
     print("SCRAPE.py done")
