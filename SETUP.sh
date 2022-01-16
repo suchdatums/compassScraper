@@ -1,14 +1,21 @@
-# one-click install...
+#!/bin/bash -i
 
+# one-click install..., ya bish?
+
+# SYSTEM
 sudo apt update -y
 sudo apt upgrade -y
-
 sudo apt-get install chromium-chromedriver
 
+# PYTHON
+python3 -m venv venv
+source venv/bin/activate
+# (MAC ONLY!!!)
+# python3 -m pip install --upgrade pip
+pip install bs4 selenium lxml requests
+pip3 install webdriver_manager
 
-
-
-# GET THE REPO
+# THIS REPO
 repo="DOMinate"
 url="https://github.com/suchdatums/$repo"
 git clone --depth=1 $url
@@ -17,42 +24,14 @@ rm ./$repo/.gitignore
 mv -f ./$repo/* ~/
 rm -r ./$repo/
 
-
 chmod +x run
 
+python3 setup_toList.py
 
-
-
-
-clear
 echo
-echo "now setup toList.py"
-echo "put all emails you want to be notified"
-# PROJECT SETUP...
-
-#echo "toList=['@gmail.com', '@gmail.com', '@gmail.com']" > ~/toList.py
-#nano toList.py
-
-goal="toList=['"
-first="yaaasss"
-
-while true ; do
-    read inp
-    if [ -z $inp ]; then
-        echo "NO INPUT"
-        break
-    fi
-    if [ ! -z "${first}" ];
-        goal+="', '"
-        first=""
-    fi
-    goal+=inp
-done
-goal+="']\"""
-
-echo $goal > toList.py
-
-
-
-# This will return true if a variable is unset or set to the empty string ("").
-# if [ -z "${VAR}" ];
+echo "NOW SETUP CRONTAB:"
+echo "run:"
+echo "crontab -e"
+echo
+echo "delete everything in the file and paste in this:"
+echo "0 * * * * /home/pi/run"

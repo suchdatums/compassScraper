@@ -35,4 +35,30 @@ with open("toList.py", 'w') as outfile:
     outfile.write(out)
 
 print()
-print("delete this file with\nrm setup_toList.py")
+#print("delete this file with\nrm setup_toList.py")
+
+
+
+# this shell version never worked... python is much easier to use
+# goal="toList=['"
+# first="yaaasss"
+
+# while true ; do
+#     read inp
+#     if [ -z $inp ]; then
+#         echo "NO INPUT"
+#         break
+#     fi
+#     if [ ! -z "${first}" ];
+#         goal+="', '"
+#         first=""
+#     fi
+#     goal+=inp
+# done
+# goal+="']\"""
+
+# echo $goal > toList.py
+
+
+# This will return true if a variable is unset or set to the empty string ("").
+# if [ -z "${VAR}" ];
