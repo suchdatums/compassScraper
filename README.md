@@ -46,8 +46,8 @@ chmod +x run
 
 
 ```
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 
 pip install bs4 selenium lxml requests
 pip3 install webdriver_manager

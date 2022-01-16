@@ -1,13 +1,11 @@
 # one-click install...
 
-
 sudo apt update -y
 sudo apt upgrade -y
 
 sudo apt-get install chromium-chromedriver
 
 
-# DELETE STUPID SHIT
 
 
 # GET THE REPO

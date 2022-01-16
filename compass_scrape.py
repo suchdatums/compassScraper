@@ -1,8 +1,11 @@
-from pprint import pprint
+import sys
+sys.path.append(r'./myca')
+
 import re, math
-
 from bs4 import BeautifulSoup
+from pprint import pprint
 
+# myca
 import DOMinate
 
 #########################################################
