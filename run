@@ -5,7 +5,10 @@
 # 0 * * * * /home/pi/run
 
 # rotate the log file
-cat lastrun.log >> everyrun.log
+#cat lastrun.log >> everyrun.log
 
 # stderr to stdout and stdout to file
 sh ./karen.sh > ./lastrun.log 2>&1
+
+# rotate the log file
+cat lastrun.log >> everyrun.log
