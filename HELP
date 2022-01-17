@@ -1,0 +1,10 @@
+: . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : .
+
+use these commands:
+
+./run               - trigger karen to scrape
+less lastrun.log    - see how the last scrape ran (Q to quit)
+
+
+< work in progress >
+: . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : . : .
