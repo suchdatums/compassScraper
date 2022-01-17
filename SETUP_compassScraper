@@ -4,8 +4,8 @@
 
 # SYSTEM
 # TODO remove comments here
-#sudo apt update -y
-#sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 sudo apt-get install chromium-chromedriver
 
 # PYTHON
