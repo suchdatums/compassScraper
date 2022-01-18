@@ -68,8 +68,9 @@ def gatherUnits( URL ):
         # <td> TABLE DATUM
         datumSHIT = ['px-6','py-4','whitespace-nowrap']
         datumSHIT2 = ['px-6','py-4','whitespace-nowrap','text-sm']
+        datumSHIT3 = ['px-6','py-4','w-10','whitespace-nowrap','text-sm']
         data = []
-        for d in rows.find_all((lambda tag: tag.name == 'td' and (tag.get('class') == datumSHIT or tag.get('class') == datumSHIT2))):
+        for d in rows.find_all((lambda tag: tag.name == 'td' and (tag.get('class') == datumSHIT or tag.get('class') == datumSHIT2) or tag.get('class') == datumSHIT3)):
             data.append( d.text )
 
         hash = int( re.sub("[^0-9]","", hashrate) )
