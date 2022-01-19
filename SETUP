@@ -21,15 +21,17 @@ asktoinstall "$cmds"
 
 
 
-
 # MAC ONLY
-echo
-echo ###################
-echo "if running on Mac OS, run this"
-cmds="
-python3 -m pip install --upgrade pip
-"
-asktoinstall "$cmds"
+if [[ $(uname -a) == *"Dawrin"* ]]; then
+    echo
+    echo ###################
+    echo "LOOKS LIKE YOU"RE RUNNING ON MAC OS..."
+    echo "YOU NEED THIS!"
+    cmds="
+    python3 -m pip install --upgrade pip
+    "
+    asktoinstall "$cmds"
+fi
 
 
 
