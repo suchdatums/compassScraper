@@ -1,8 +1,4 @@
-
-# TODO
-# can I pipe this into python3 << EOF
-# ?!?!?!?! THAT WOULD BE COOL
-# ... but harder to debug I suppose...? TRY IT
+#!/usr/bin/env python3
 
 print("\n\n")
 print("setup_toList.py")
@@ -16,7 +12,7 @@ while True:
 
     if inp == '':
             break
-    print(f"is < {inp} > free of typo?")
+    print(f"add?  {inp}")
     good = input("y/yes: ")
 
     if good in {'y', 'yes', 'Y', 'YES'}:
@@ -29,7 +25,7 @@ while True:
         emails.append(inp)
         out = out + inp
     else:
-         print("ok, forgotten..")
+         print("ok, not added")
 
 if not len(emails):
     print("no emails given, doing nothing and exiting")
@@ -72,3 +68,10 @@ print()
 
 # This will return true if a variable is unset or set to the empty string ("").
 # if [ -z "${VAR}" ];
+
+
+
+# TODO
+# can I pipe this into python3 << EOF
+# ?!?!?!?! THAT WOULD BE COOL
+# ... but harder to debug I suppose...? TRY IT
