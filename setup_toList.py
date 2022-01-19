@@ -1,3 +1,9 @@
+
+# TODO
+# can I pipe this into python3 << EOF
+# ?!?!?!?! THAT WOULD BE COOL
+# ... but harder to debug I suppose...? TRY IT
+
 print("\n\n")
 print("setup_toList.py")
 print("ENTER THE EMAIL ADDRESS YOU WANT TO RECEIVE SCRAPING ALERTS:")

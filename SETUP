@@ -1,0 +1,65 @@
+#!/bin/bash -i
+# one-click install..., ya bish?
+
+
+
+# TODO can we safely assume we don't need this?
+# cd ~
+echo "===================================="
+echo "INSTALLER SCRIPT FOR COMPASS SCRAPER"
+
+
+# SYSTEM INSTALL
+###################
+cmds="
+sudo apt update -y
+sudo apt upgrade -y
+
+sudo apt-get install chromium-chromedriver
+"
+asktoinstall "$cmds"
+
+
+
+# PYTHON
+###################
+cmds="
+# source doesn't work... use dot?
+python3 -m venv venv
+. venv/bin/activate
+
+# MAC ONLY
+if [[ $(uname -a) == *"Darwin"* ]]; then
+    python3 -m pip install --upgrade pip
+fi
+
+pip install bs4 selenium lxml requests
+pip3 install webdriver_manager
+"
+asktoinstall "$cmds"
+
+
+
+# WE DON'T NEED THIS ANYMORE BECAUSE GETREPO CHANGES PERMISSIONS <3
+#chmod +x run
+
+
+
+# RUN SETUP OTHER SCRIPTS
+###################
+cmds="
+python3 setup_toList.py
+sh myca/setup_easy_notify.sh
+"
+asktoinstall "$cmds"
+
+
+echo
+echo "NOW, SETUP CRONTAB:"
+echo "run:"
+echo "crontab -e"
+echo
+echo "delete everything in the file and paste in this:"
+# TODO CLUNKLY... DON'T HARD CODE SHIT
+echo "0 * * * * /home/pi/compassScraper/run"
+# TODO can I do this automatically??? probably not...
