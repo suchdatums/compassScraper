@@ -34,15 +34,15 @@ if [[ $(uname -a) == *"Dawrin"* ]]; then
 fi
 
 
-
+# TODO HOW TO ACTUATE THE VENV IN A MODULE???
+#python3 -m venv venv
+#. venv/bin/activate
 
 # PYTHON
 echo
 echo ###################
 echo "setup python environment"
 cmds="
-python3 -m venv venv
-. venv/bin/activate
 pip install bs4 selenium lxml requests
 pip3 install webdriver_manager
 "
