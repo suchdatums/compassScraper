@@ -1,14 +1,16 @@
 #!/bin/bash
-
 # this script should be triggered to run with ( crontab -e )
 # it will fail if it's not executable (chmod +x run)
 # 0 * * * * /home/pi/run
 
-# rotate the log file
-#cat lastrun.log >> everyrun.log
+# TODO THIS FEELS CLUNKY
+cd ~/compassScraper
 
 # stderr to stdout and stdout to file
 sh ./karen.sh > ./lastrun.log 2>&1
 
 # rotate the log file
-cat lastrun.log >> everyrun.log
+cat ./lastrun.log >> ./everyrun.log
+
+
+

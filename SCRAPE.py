@@ -5,7 +5,8 @@ import time, csv, math, pprint
 from bs4 import BeautifulSoup
 
 # myca
-sys.path.append(r'./myca')
+#sys.path.append(r'./myca')
+sys.path.append(r'../myca')
 import DOMinate
 import easy_notify
 import unit_criteria

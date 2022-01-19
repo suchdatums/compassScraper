@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 from pprint import pprint
 
 # myca
-sys.path.append(r'./myca')
+#sys.path.append(r'./myca')
+sys.path.append(r'../myca')
 import DOMinate
 
 #########################################################
