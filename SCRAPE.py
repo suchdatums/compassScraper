@@ -7,8 +7,9 @@ from bs4 import BeautifulSoup
 # myca
 #sys.path.append(r'./myca')
 sys.path.append(r'../myca')
+
 import DOMinate
-import easy_notify
+import my_notify
 import unit_criteria
 
 import compass_scrape
