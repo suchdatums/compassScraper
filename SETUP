@@ -40,6 +40,7 @@ echo
 echo ###################
 echo "setup python environment"
 cmds="
+sudo apt-get install python3-venv -y
 python3 -m venv venv
 . venv/bin/activate
 pip install bs4 selenium lxml requests
