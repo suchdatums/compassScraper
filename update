@@ -1,8 +1,20 @@
 #!/bin/bash -i
 
+
 echo
 echo "this script pulls updated files from github"
 echo "if you use getrepo it will delete the whole directory..."
 echo "so this is plan b"
 
 # TODO - write the script ;)
+
+
+baseurl="https://raw.githubusercontent.com/suchdatums/compassScraper/main/compass_scrape.py"
+
+echo
+echo "+++++++++++++++++++++++++++++++++++"
+echo "this scripts updates files in place"
+echo
+echo "update what file?"
+read f
+curl -s 
