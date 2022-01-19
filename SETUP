@@ -1,18 +1,17 @@
 #!/bin/bash -i
 cd "${0%/*}"
+
 # one-click install..., ya bish?
-
-
-
-# TODO can we safely assume we don't need this?
-# cd ~
 echo "===================================="
 echo "INSTALLER SCRIPT FOR COMPASS SCRAPER"
 
 
 
+
+
 # SYSTEM INSTALL
-###################
+echo
+echo ###################
 cmds="
 sudo apt update -y
 sudo apt upgrade -y
@@ -26,8 +25,8 @@ asktoinstall "$cmds"
 
 # MAC ONLY
 echo
-echo "if running on Mac OS..."
-###################
+echo ###################
+echo "if running on Mac OS, run this"
 cmds="
 python3 -m pip install --upgrade pip
 "
@@ -35,8 +34,11 @@ asktoinstall "$cmds"
 
 
 
+
 # PYTHON
-###################
+echo
+echo ###################
+echo "setup python environment"
 cmds="
 python3 -m venv venv
 . venv/bin/activate
@@ -47,24 +49,21 @@ asktoinstall "$cmds"
 
 
 
-# WE DON'T NEED THIS ANYMORE BECAUSE GETREPO CHANGES PERMISSIONS <3
-#chmod +x run
-
-
 
 
 # RUN SETUP OTHER SCRIPTS
 echo
+echo ###################
 echo "set alert email address?"
-###################
 cmds="
 python3 setup_toList.py
 "
 asktoinstall "$cmds"
 
 
-
+# CRONTAB
 echo
+echo ###################
 echo "NOW, SETUP CRONTAB:"
 echo
 echo "crontab -e"
