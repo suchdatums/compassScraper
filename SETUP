@@ -29,7 +29,7 @@ python3 -m venv venv
 . venv/bin/activate
 
 # MAC ONLY
-if [[ $(uname -a) == *"Darwin"* ]]; then
+if [[ "$(uname -a)" == *"Darwin"* ]]; then
     python3 -m pip install --upgrade pip
 fi
 
