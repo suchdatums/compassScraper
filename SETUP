@@ -1,4 +1,5 @@
 #!/bin/bash -i
+cd "${0%/*}"
 # one-click install..., ya bish?
 
 
