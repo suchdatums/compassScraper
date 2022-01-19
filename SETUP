@@ -25,11 +25,12 @@ asktoinstall "$cmds"
 
 
 # MAC ONLY
+echo
+echo "if running on Mac OS..."
 ###################
 cmds="
 python3 -m pip install --upgrade pip
 "
-echo "if running on Mac OS..."
 asktoinstall "$cmds"
 
 
@@ -53,11 +54,12 @@ asktoinstall "$cmds"
 
 
 # RUN SETUP OTHER SCRIPTS
+echo
+echo "set alert email address?"
 ###################
 cmds="
 python3 setup_toList.py
 "
-echo "set alert email address?"
 asktoinstall "$cmds"
 
 
