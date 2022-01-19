@@ -9,6 +9,7 @@ echo "===================================="
 echo "INSTALLER SCRIPT FOR COMPASS SCRAPER"
 
 
+
 # SYSTEM INSTALL
 ###################
 cmds="
@@ -21,18 +22,22 @@ asktoinstall "$cmds"
 
 
 
+
+# MAC ONLY
+###################
+cmds="
+python3 -m pip install --upgrade pip
+"
+echo "if running on Mac OS..."
+asktoinstall "$cmds"
+
+
+
 # PYTHON
 ###################
 cmds="
-# source doesn't work... use dot?
 python3 -m venv venv
 . venv/bin/activate
-
-# MAC ONLY
-if [[ "$(uname -a)" == *"Darwin"* ]]; then
-    python3 -m pip install --upgrade pip
-fi
-
 pip install bs4 selenium lxml requests
 pip3 install webdriver_manager
 "
@@ -45,21 +50,22 @@ asktoinstall "$cmds"
 
 
 
+
 # RUN SETUP OTHER SCRIPTS
 ###################
 cmds="
 python3 setup_toList.py
-sh myca/setup_easy_notify.sh
 "
+echo "set alert email address?"
 asktoinstall "$cmds"
+
 
 
 echo
 echo "NOW, SETUP CRONTAB:"
-echo "run:"
+echo
 echo "crontab -e"
 echo
-echo "delete everything in the file and paste in this:"
+echo "...paste in this:"
 # TODO CLUNKLY... DON'T HARD CODE SHIT
 echo "0 * * * * /home/pi/compassScraper/run"
-# TODO can I do this automatically??? probably not...
