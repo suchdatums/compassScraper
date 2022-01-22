@@ -1,20 +1,36 @@
 #!/bin/bash -i
+# this changes PWD to the directory that this script is running in
+# this script needs to be run INSIDE the repo folder
+# or else mayhem will ensue
 
+cd "${0%/*}"
 
-echo
-echo "this script pulls updated files from github"
-echo "if you use getrepo it will delete the whole directory..."
-echo "so this is plan b"
+# echo -e "\e[33;1m"
+echo -e "\n\e[1;32m"
+echo ===================================================
+echo this scripts updates files in place instead of
+echo running '.getrepo' and destroying the entire folder
+echo this way you can keep 'venv/' etc., intact
+echo -e "\e[0m"
+
+thisrepo=${PWD##*/}
+
+baseurl="https://raw.githubusercontent.com/suchdatums/$thisrepo/main/"
+
+echo -e "update what file? \n (leave blank to exit)"
+
+read f
+if [ -z f ]; then
+echo no input, exiting...
+exit
+fi
+
+curl -s baseurl$f > $f
+
+if [ $? -eq 0 ; then]
+echo OK; now check $f file:        cat $f
+else
+echo ERROR: maybe this file does not exist?
+fi
 
 # TODO - write the script ;)
-
-
-baseurl="https://raw.githubusercontent.com/suchdatums/compassScraper/main/compass_scrape.py"
-
-echo
-echo "+++++++++++++++++++++++++++++++++++"
-echo "this scripts updates files in place"
-echo
-echo "update what file?"
-read f
-curl -s 
