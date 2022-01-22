@@ -13,6 +13,7 @@ echo running '.getrepo' and destroying the entire folder
 echo this way you can keep 'venv/' etc., intact
 echo -e "\e[0m"
 
+# https://stackoverflow.com/questions/1371261/get-current-directory-name-without-full-path-in-a-bash-script
 thisrepo=${PWD##*/}
 
 baseurl="https://raw.githubusercontent.com/suchdatums/$thisrepo/main/"
